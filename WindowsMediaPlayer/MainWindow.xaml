@@ -1,0 +1,28 @@
+﻿<Window x:Class="WindowsMediaPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150*" />
+            <RowDefinition Height="150*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*" />
+            <ColumnDefinition Width="100*" />
+            <ColumnDefinition Width="100*" />
+        </Grid.ColumnDefinitions>
+        
+        <Button Height="50" Width="50" Name="Lecture" Click="ButtonRead" HorizontalAlignment="Center" 
+                Margin="0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"> Lecture </Button>
+
+        <Button Height="50" Width="50" Name="Stop" Click="ButtonStop" HorizontalAlignment="Center" 
+                Margin="0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2"> Stop </Button>
+        
+        <Button Height="25" Width="80" Name="Parcourir" Click="ButtonPath" HorizontalAlignment="Center"
+                Margin="43,0,43,12" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1">Parcourir</Button>
+
+        <Slider Name="Volume" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" ValueChanged="ValueSound" />
+
+    </Grid>
+</Window>

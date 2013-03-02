@@ -38,9 +38,9 @@ namespace WindowsMediaPlayer
             var    tmp = Action.ModeleRead();
 
             if (tmp == eRead.Pause)
-                this.Lecture.Content = "Lecture";
+                this.LectureButton.Content = "Lecture";
             else if (tmp == eRead.Play)
-                this.Lecture.Content = "Pause";
+                this.LectureButton.Content = "Pause";
         }
 
         private void ButtonStop(object sender, RoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace WindowsMediaPlayer
             var tmp = Action.ModeleStop();
 
             if (tmp == eStop.Stop)
-                this.Lecture.Content = "Lecture";
+                this.LectureButton.Content = "Lecture";
         }
 
         private void ButtonPath(object sender, RoutedEventArgs e)

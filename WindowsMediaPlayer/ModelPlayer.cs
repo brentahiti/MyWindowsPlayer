@@ -21,11 +21,26 @@ namespace WindowsMediaPlayer
         public string LectureContent
         {
             get { return this.lectureContent; }
-            set
+            set 
             {
                 this.lectureContent = value;
                 if (this.PropertyChanged != null)
                     this.PropertyChanged(this, new PropertyChangedEventArgs("LectureContent"));
+            }
+        }
+
+        private double valueSoundContent;
+        public double ValueSoundContent
+        {
+            get { return this.valueSoundContent; }
+            set
+            {
+                this.valueSoundContent = value;
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged(this, new PropertyChangedEventArgs("ValueSoundContent"));
+                    this.mediaHandler.MediaPlayer.Volume = this.valueSoundContent / 100;
+                }
             }
         }
 
@@ -41,6 +56,13 @@ namespace WindowsMediaPlayer
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
 
             this.LectureContent = "Lecture";
+            this.ValueSoundContent = 50.0;
+
+        }
+
+        public void ChangeSoundValueContent(object sender, FileEventArg e)
+        {
+            this.mediaHandler.MediaPlayer.Volume = this.valueSoundContent / 100;
         }
 
         public void ChangeLectureContent(object sender, FileEventArg e)

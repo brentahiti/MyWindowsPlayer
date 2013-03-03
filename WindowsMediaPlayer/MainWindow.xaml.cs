@@ -56,9 +56,9 @@ namespace WindowsMediaPlayer
             Action.ModelePath();
         }
 
-        private void ValueSound(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Action.ModeleVolume(this.Volume.Value);
+
         }
     }
 
@@ -75,11 +75,7 @@ namespace WindowsMediaPlayer
         public Modele()
         {
             this.player = new MediaPlayer();
-        }
-
-        public void ModeleVolume(Double Value)
-        {
-            this.player.Volume = Value / 10;
+            this.player.Volume = 0.0;
         }
 
         public ePath ModelePath()

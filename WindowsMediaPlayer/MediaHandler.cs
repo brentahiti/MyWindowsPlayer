@@ -33,6 +33,7 @@ namespace WindowsMediaPlayer
                 {
                     this.mediaHandler.MediaPlayer.Pause();
                     this.mediaHandler.PlayState = ePlayState.Pause;
+                    return;
                 }
                 else if (this.mediaHandler.PlayState == ePlayState.Stop)
                 {

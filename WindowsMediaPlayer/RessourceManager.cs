@@ -38,7 +38,10 @@ namespace WindowsMediaPlayer
                 this.FileFound = true;
                 this.FilePath = windowsDial.FileName;
             }
-            this.FileFound = false;
+            else
+            {
+                this.FileFound = false;
+            }
         }
     }
 

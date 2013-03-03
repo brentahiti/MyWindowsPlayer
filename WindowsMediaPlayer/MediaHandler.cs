@@ -33,14 +33,16 @@ namespace WindowsMediaPlayer
                 {
                     this.mediaHandler.MediaPlayer.Pause();
                     this.mediaHandler.PlayState = ePlayState.Pause;
-                    return;
                 }
-                else if (this.mediaHandler.PlayState == ePlayState.Stop)
+                else
                 {
-                    this.mediaHandler.MediaPlayer.Open(new System.Uri(this.mediaHandler.RessourceManager.FindRessource.FilePath));
+                    if (this.mediaHandler.PlayState == ePlayState.Stop)
+                    {
+                        this.mediaHandler.MediaPlayer.Open(new System.Uri(this.mediaHandler.RessourceManager.FindRessource.FilePath));
+                    }
+                    this.mediaHandler.MediaPlayer.Play();
+                    this.mediaHandler.PlayState = ePlayState.Play;
                 }
-                this.mediaHandler.MediaPlayer.Play();
-                this.mediaHandler.PlayState = ePlayState.Play;
             }
         }
     }
@@ -73,11 +75,24 @@ namespace WindowsMediaPlayer
 
     class MediaHandler
     {
-        public ePlayState PlayState { get; set; }
+        private ePlayState playState;
+        public ePlayState PlayState
+        {
+            get { return this.playState; }
+            set
+            {
+                this.playState = value;
+                if (this.FileEvent != null)
+                    this.FileEvent(this, new FileEventArg(this.PlayState));
+            }
+        }
+
         public MediaPlayer MediaPlayer { get; private set; }
         public RessourceManager RessourceManager { get; private set; }
         public FilePlayer PlayFile { get; private set; }
         public FileStopper StopFile { get; private set; }
+
+        public event EventHandler<FileEventArg> FileEvent;
 
         public MediaHandler(RessourceManager rm)
         {
@@ -86,6 +101,16 @@ namespace WindowsMediaPlayer
             this.RessourceManager = rm;
             this.PlayFile = new FilePlayer(this);
             this.StopFile = new FileStopper(this);
+        }
+    }
+
+    class FileEventArg : EventArgs
+    {
+        public ePlayState State { get; private set; }
+
+        public FileEventArg(ePlayState state)
+        {
+            this.State = state;
         }
     }
 }

@@ -20,17 +20,12 @@ namespace WindowsMediaPlayer
         private string lectureContent;
         public string LectureContent
         {
-            get
-            {
-                return this.lectureContent;
-            }
+            get { return this.lectureContent; }
             set
             {
                 this.lectureContent = value;
                 if (this.PropertyChanged != null)
-                {
                     this.PropertyChanged(this, new PropertyChangedEventArgs("LectureContent"));
-                }
             }
         }
 
@@ -43,7 +38,17 @@ namespace WindowsMediaPlayer
             this.PlayFile = this.mediaHandler.PlayFile;
             this.StopFile = this.mediaHandler.StopFile;
 
+            this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
+
             this.LectureContent = "Lecture";
+        }
+
+        public void ChangeLectureContent(object sender, FileEventArg e)
+        {
+            if (e.State == ePlayState.Play)
+                this.LectureContent = "Pause";
+            else
+                this.LectureContent = "Play";
         }
     }
 }

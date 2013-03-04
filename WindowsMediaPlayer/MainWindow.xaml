@@ -27,8 +27,8 @@
                 Margin="43,0,43,12" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1">Parcourir</Button>
 
         <Slider Name="Volume" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1" Value="{Binding ValueSoundContent}" SmallChange="1" Maximum="100" Margin="0,0,0,73" />
-        <TextBox Grid.Column="1" HorizontalAlignment="Center" Name="txtValue" Margin="72,88,73,43"
-                 Text="{Binding Mode=TwoWay, ElementName=Volume,Path=Value, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Width="30"></TextBox>
+        <TextBox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Name="txtValue"
+                 Text="{Binding Mode=TwoWay, ElementName=Volume,Path=Value, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Height="25" Width="30" Margin="0,0,1,10"></TextBox>
 
     </Grid>
 </Window>

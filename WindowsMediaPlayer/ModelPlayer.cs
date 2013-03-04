@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace WindowsMediaPlayer
 {
@@ -11,6 +12,7 @@ namespace WindowsMediaPlayer
     {
         private RessourceManager ressourceManager;
         private MediaHandler mediaHandler;
+        public MediaElement mediaElement { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand FindRessource { get; private set; }
@@ -39,7 +41,7 @@ namespace WindowsMediaPlayer
                 if (this.PropertyChanged != null)
                 {
                     this.PropertyChanged(this, new PropertyChangedEventArgs("ValueSoundContent"));
-                    this.mediaHandler.MediaPlayer.Volume = this.valueSoundContent / 100;
+                    this.mediaElement.Volume = this.valueSoundContent / 100;
                 }
             }
         }
@@ -52,17 +54,12 @@ namespace WindowsMediaPlayer
             this.FindRessource = this.ressourceManager.FindRessource;
             this.PlayFile = this.mediaHandler.PlayFile;
             this.StopFile = this.mediaHandler.StopFile;
+            this.mediaElement = this.mediaHandler.MediaPlayer;
 
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
 
-            this.LectureContent = "Lecture";
-            this.ValueSoundContent = 50.0;
-
-        }
-
-        public void ChangeSoundValueContent(object sender, FileEventArg e)
-        {
-            this.mediaHandler.MediaPlayer.Volume = this.valueSoundContent / 100;
+            this.LectureContent = "Play";
+            this.ValueSoundContent = 0.0;
         }
 
         public void ChangeLectureContent(object sender, FileEventArg e)

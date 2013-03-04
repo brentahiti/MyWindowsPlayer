@@ -2,33 +2,40 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wm="clr-namespace:WindowsMediaPlayer"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="468" Width="569">
     <Window.DataContext>
         <wm:ModelPlayer />
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="150*" />
-            <RowDefinition Height="150*" />
+            <RowDefinition Height="270*" />
+            <RowDefinition Height="30*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*" />
-            <ColumnDefinition Width="100*" />
-            <ColumnDefinition Width="100*" />
-        </Grid.ColumnDefinitions>
-        
-        <Button Command="{Binding PlayFile}" Height="50" Width="50" Name="LectureButton" HorizontalAlignment="Center" 
-                Margin="0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Content="{Binding LectureContent}" />
 
-        <Button Command="{Binding StopFile}" Height="50" Width="50" Name="Stop" HorizontalAlignment="Center" 
-                Margin="0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2">Stop</Button>
-        
-        <Button Command="{Binding FindRessource}" Height="25" Width="80" Name="Parcourir" HorizontalAlignment="Center"
-                Margin="43,0,43,12" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1">Parcourir</Button>
+        <Grid Grid.Row="0"  Background="Black">
+            <Viewbox>
+                  <Grid>
+                    <MediaElement VerticalAlignment="Center" Height="auto" Width="auto"
+                        Source="{Binding mediaElement.Source}"
+                                  LoadedBehavior="{Binding mediaElement.LoadedBehavior}"/>
 
-        <Slider Name="Volume" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1" Value="{Binding ValueSoundContent}" SmallChange="1" Maximum="100" Margin="0,0,0,73" />
-        <TextBox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Name="txtValue"
-                 Text="{Binding Mode=TwoWay, ElementName=Volume,Path=Value, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Height="25" Width="30" Margin="0,0,1,10"></TextBox>
+                 </Grid>
+             </Viewbox>
+        </Grid>
 
+        <Grid Grid.Row="1"  Background="Black">
+             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*" />
+                <ColumnDefinition Width="100*" />
+                <ColumnDefinition Width="100*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Command="{Binding StopFile}" Name="Stop" HorizontalAlignment="Stretch" Margin="75,12,27,9" VerticalAlignment="Bottom" Grid.Column="2">Stop</Button>
+            <Button Command="{Binding PlayFile}" Height="24" Width="50" Name="LectureButton" HorizontalAlignment="Center" Margin="6,10,126,9" VerticalAlignment="Bottom" Content="{Binding LectureContent}" />
+            <TextBox Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Name="txtValue" Text="{Binding Mode=TwoWay, ElementName=Volume,Path=Value, UpdateSourceTrigger=PropertyChanged}" Height="22" Width="30" Margin="17,0,0,9"></TextBox>
+            <Button Command="{Binding FindRessource}" Height="24" Width="80" Name="Parcourir" HorizontalAlignment="Center" Margin="88,0,14,9" VerticalAlignment="Bottom">Parcourir</Button>
+            <Slider Name="Volume" VerticalAlignment="Bottom" Value="{Binding ValueSoundContent}" SmallChange="1" Maximum="100" Margin="0,0,0,7" Grid.Column="1" />
+       
+        </Grid>
     </Grid>
 </Window>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace WindowsMediaPlayer
 {
@@ -31,16 +32,16 @@ namespace WindowsMediaPlayer
             {
                 if (this.mediaHandler.PlayState == ePlayState.Play)
                 {
-                    this.mediaHandler.MediaPlayer.Pause();
+                    this.mediaHandler.MediaPlayer.LoadedBehavior = MediaState.Pause;
                     this.mediaHandler.PlayState = ePlayState.Pause;
                 }
                 else
                 {
                     if (this.mediaHandler.PlayState == ePlayState.Stop)
                     {
-                        this.mediaHandler.MediaPlayer.Open(new System.Uri(this.mediaHandler.RessourceManager.FindRessource.FilePath));
+                        this.mediaHandler.MediaPlayer.Source = (new System.Uri(this.mediaHandler.RessourceManager.FindRessource.FilePath, UriKind.Relative));
                     }
-                    this.mediaHandler.MediaPlayer.Play();
+                    this.mediaHandler.MediaPlayer.LoadedBehavior = MediaState.Play;
                     this.mediaHandler.PlayState = ePlayState.Play;
                 }
             }
@@ -67,7 +68,7 @@ namespace WindowsMediaPlayer
         {
             if (this.mediaHandler.PlayState != ePlayState.Stop)
             {
-                this.mediaHandler.MediaPlayer.Stop();
+                this.mediaHandler.MediaPlayer.LoadedBehavior = MediaState.Stop;
                 this.mediaHandler.PlayState = ePlayState.Stop;
             }
         }
@@ -87,7 +88,9 @@ namespace WindowsMediaPlayer
             }
         }
 
-        public MediaPlayer MediaPlayer { get; private set; }
+        public MediaElement MediaPlayer { get; set; }
+
+
         public RessourceManager RessourceManager { get; private set; }
         public FilePlayer PlayFile { get; private set; }
         public FileStopper StopFile { get; private set; }
@@ -97,7 +100,10 @@ namespace WindowsMediaPlayer
         public MediaHandler(RessourceManager rm)
         {
             this.PlayState = ePlayState.Stop;
-            this.MediaPlayer = new MediaPlayer();
+            this.MediaPlayer = new MediaElement();
+
+            this.MediaPlayer.LoadedBehavior = MediaState.Play;
+
             this.RessourceManager = rm;
             this.PlayFile = new FilePlayer(this);
             this.StopFile = new FileStopper(this);

@@ -17,7 +17,8 @@
                   <Grid>
                     <MediaElement VerticalAlignment="Center" Height="auto" Width="auto"
                         Source="{Binding mediaElement.Source}"
-                                  LoadedBehavior="{Binding mediaElement.LoadedBehavior}"/>
+                        LoadedBehavior="{Binding mediaElement.LoadedBehavior}"
+                        Volume="{Binding mediaElement.Volume}" />
 
                  </Grid>
              </Viewbox>

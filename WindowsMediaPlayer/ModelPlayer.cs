@@ -59,7 +59,7 @@ namespace WindowsMediaPlayer
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
 
             this.LectureContent = "Play";
-            this.ValueSoundContent = 0.0;
+            this.ValueSoundContent = 50.0;
         }
 
         public void ChangeLectureContent(object sender, FileEventArg e)

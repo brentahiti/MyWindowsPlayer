@@ -30,7 +30,7 @@ namespace WindowsMediaPlayer
             OpenFileDialog windowsDial = new OpenFileDialog();
             windowsDial.FileName = "File";
             windowsDial.DefaultExt = ".avi";
-            windowsDial.Filter = "Music file (.mp3)|*.mp3| " + "Video File (.avi, .wmv)|*.avi;*.wmv";
+            windowsDial.Filter = "Music file (.mp3)|*.mp3|" + "Video File (.avi, .wmv)|*.avi;*.wmv|" + "Picture File (.bmp, .jpg, .jpeg, .png)|*.bmp;*.jpg;*.jpeg;*.png";
 
             Nullable<bool> result = windowsDial.ShowDialog();
             if (result == true)

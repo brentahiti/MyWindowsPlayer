@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace WindowsMediaPlayer
 {
-    class ModelPlayer : INotifyPropertyChanged
+    public class ModelPlayer : INotifyPropertyChanged
     {
         private RessourceManager ressourceManager;
         private MediaHandler mediaHandler;
@@ -62,9 +62,9 @@ namespace WindowsMediaPlayer
             this.ressourceManager = new RessourceManager();
             this.mediaHandler = new MediaHandler(this.ressourceManager);
 
-            this.FindRessource = this.ressourceManager.FindRessource;
-            this.PlayFile = this.mediaHandler.PlayFile;
-            this.StopFile = this.mediaHandler.StopFile;
+            this.FindRessource = new RelayCommand(this.ressourceManager.FindRessource);
+            this.PlayFile = new RelayCommand(this.mediaHandler.PlayFile);
+            this.StopFile = new RelayCommand(this.mediaHandler.StopFile);
             this.mediaElement = this.mediaHandler.MediaPlayer;
 
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);

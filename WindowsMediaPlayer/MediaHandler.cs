@@ -10,70 +10,6 @@ namespace WindowsMediaPlayer
 {
     public enum ePlayState { Play, Pause, Stop }
 
-    class FilePlayer : ICommand
-    {
-        private MediaHandler mediaHandler;
-
-        public FilePlayer(MediaHandler mh)
-        {
-            this.mediaHandler = mh;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
-        {
-            if (this.mediaHandler.RessourceManager.FindRessource.FileFound)
-            {
-                if (this.mediaHandler.PlayState == ePlayState.Play)
-                {
-                    this.mediaHandler.MediaPlayer.LoadedBehavior = MediaState.Pause;
-                    this.mediaHandler.PlayState = ePlayState.Pause;
-                }
-                else
-                {
-                    if (this.mediaHandler.PlayState == ePlayState.Stop)
-                    {
-                        this.mediaHandler.MediaPlayer.Source = (new System.Uri(this.mediaHandler.RessourceManager.FindRessource.FilePath, UriKind.Relative));
-                    }
-                    this.mediaHandler.MediaPlayer.LoadedBehavior = MediaState.Play;
-                    this.mediaHandler.PlayState = ePlayState.Play;
-                }
-            }
-        }
-    }
-
-    class FileStopper : ICommand
-    {
-        private MediaHandler mediaHandler;
-
-        public FileStopper(MediaHandler mh)
-        {
-            this.mediaHandler = mh;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
-        {
-            if (this.mediaHandler.PlayState != ePlayState.Stop)
-            {
-                this.mediaHandler.MediaPlayer.LoadedBehavior = MediaState.Stop;
-                this.mediaHandler.PlayState = ePlayState.Stop;
-            }
-        }
-    }
-
     class MediaHandler
     {
         private ePlayState playState;
@@ -87,13 +23,8 @@ namespace WindowsMediaPlayer
                     this.FileEvent(this, new FileEventArg(this.PlayState));
             }
         }
-
         public MediaElement MediaPlayer { get; set; }
-
-
         public RessourceManager RessourceManager { get; private set; }
-        public FilePlayer PlayFile { get; private set; }
-        public FileStopper StopFile { get; private set; }
 
         public event EventHandler<FileEventArg> FileEvent;
 
@@ -105,12 +36,40 @@ namespace WindowsMediaPlayer
             this.MediaPlayer.LoadedBehavior = MediaState.Play;
 
             this.RessourceManager = rm;
-            this.PlayFile = new FilePlayer(this);
-            this.StopFile = new FileStopper(this);
+        }
+
+        public void PlayFile()
+        {
+            if (this.RessourceManager.FileFound)
+            {
+                if (this.PlayState == ePlayState.Play)
+                {
+                    this.MediaPlayer.LoadedBehavior = MediaState.Pause;
+                    this.PlayState = ePlayState.Pause;
+                }
+                else
+                {
+                    if (this.PlayState == ePlayState.Stop)
+                    {
+                        this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.FilePath, UriKind.Relative));
+                    }
+                    this.MediaPlayer.LoadedBehavior = MediaState.Play;
+                    this.PlayState = ePlayState.Play;
+                }
+            }
+        }
+
+        public void StopFile()
+        {
+            if (this.PlayState != ePlayState.Stop)
+            {
+                this.MediaPlayer.LoadedBehavior = MediaState.Stop;
+                this.PlayState = ePlayState.Stop;
+            }
         }
     }
 
-    class FileEventArg : EventArgs
+    public class FileEventArg : EventArgs
     {
         public ePlayState State { get; private set; }
 

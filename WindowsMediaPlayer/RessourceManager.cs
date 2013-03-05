@@ -7,25 +7,18 @@ using Microsoft.Win32;
 
 namespace WindowsMediaPlayer
 {
-    class RessourceFinder : ICommand
+    public class RessourceManager
     {
         public bool FileFound { get; private set; }
         public string FilePath { get; private set; }
 
-        public RessourceFinder()
+        public RessourceManager()
         {
             this.FileFound = false;
             this.FilePath = null;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
+        public void FindRessource()
         {
             OpenFileDialog windowsDial = new OpenFileDialog();
             windowsDial.FileName = "File";
@@ -42,16 +35,6 @@ namespace WindowsMediaPlayer
             {
                 this.FileFound = false;
             }
-        }
-    }
-
-    class RessourceManager
-    {
-        public RessourceFinder FindRessource { get; private set; }
-
-        public RessourceManager()
-        {
-            this.FindRessource = new RessourceFinder();
         }
     }
 }

@@ -19,15 +19,26 @@ namespace WindowsMediaPlayer
         public ICommand PlayFile { get; private set; }
         public ICommand StopFile { get; private set; }
 
-        private string lectureContent;
-        public string LectureContent
+        private string visiblePlay;
+        private string visiblePause;
+        public string VisiblePlay
         {
-            get { return this.lectureContent; }
-            set 
+            get { return this.visiblePlay; }
+            private set
             {
-                this.lectureContent = value;
+                this.visiblePlay = value;
                 if (this.PropertyChanged != null)
-                    this.PropertyChanged(this, new PropertyChangedEventArgs("LectureContent"));
+                    this.PropertyChanged(this, new PropertyChangedEventArgs("VisiblePlay"));
+            }
+        }
+        public string VisiblePause // { get; private set; }
+        {
+            get { return this.visiblePause; }
+            private set
+            {
+                this.visiblePause = value;
+                if (this.PropertyChanged != null)
+                    this.PropertyChanged(this, new PropertyChangedEventArgs("VisiblePause"));
             }
         }
 
@@ -58,16 +69,24 @@ namespace WindowsMediaPlayer
 
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
 
-            this.LectureContent = "Play";
             this.ValueSoundContent = 50.0;
+            this.VisiblePlay = "Visible";
+            this.VisiblePause = "Hidden";
         }
 
         public void ChangeLectureContent(object sender, FileEventArg e)
         {
+            Console.WriteLine("ok");
             if (e.State == ePlayState.Play)
-                this.LectureContent = "Pause";
+            {
+                this.VisiblePlay = "Hidden";
+                this.VisiblePause = "Visible";
+            }
             else
-                this.LectureContent = "Play";
+            {
+                this.VisiblePlay = "Visible";
+                this.VisiblePause = "Hidden";
+            }
         }
     }
 }

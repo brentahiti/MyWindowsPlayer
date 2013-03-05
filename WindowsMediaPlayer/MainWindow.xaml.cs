@@ -30,36 +30,13 @@ namespace WindowsMediaPlayer
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
             this.Action = new Modele();
         }
 
-        private void ButtonRead(object sender, RoutedEventArgs e)
-        {
-            var    tmp = Action.ModeleRead();
-
-            if (tmp == eRead.Pause)
-                this.LectureButton.Content = "Lecture";
-            else if (tmp == eRead.Play)
-                this.LectureButton.Content = "Pause";
-        }
-
-        private void ButtonStop(object sender, RoutedEventArgs e)
-        {
-            var tmp = Action.ModeleStop();
-
-            if (tmp == eStop.Stop)
-                this.LectureButton.Content = "Lecture";
-        }
-
-        private void ButtonPath(object sender, RoutedEventArgs e)
-        {
-            Action.ModelePath();
-        }
-
-        private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
-        }
     }
 
     /// <summary>

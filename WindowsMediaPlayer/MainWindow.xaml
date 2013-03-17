@@ -1,12 +1,19 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:wm="clr-namespace:WindowsMediaPlayer"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="WindowsMediaPlayer.MainWindow"
-        Title="MainWindow" Height="468" Width="569"
-        Loaded="Window_Loaded" Background="Black">
-	<Window.Resources>
-		<ControlTemplate x:Key="ButtonControlTemplateMediaPlayer" TargetType="{x:Type Button}">
+        Title="MainWindow" Height="290" Width="925"
+        Loaded="Window_Loaded"
+        Background="Transparent"
+        Foreground="{x:Null}"
+        WindowState="Normal"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        PreviewMouseMove="ResetCursor"
+    >
+    <!-- xmlns:wm="clr-namespace:WindowsMediaPlayer" -->
+    <Window.Resources>
+        <ControlTemplate x:Key="ButtonControlTemplateMediaPlayer" TargetType="{x:Type Button}">
 			<Border x:Name="border" CornerRadius="2">
 				<Border.Effect>
 					<DropShadowEffect Color="White" Direction="0" BlurRadius="3" ShadowDepth="0" Opacity="0.75"/>
@@ -51,52 +58,108 @@
 			</Border>
 		</ControlTemplate>
 	</Window.Resources>
-    <Window.DataContext>
+	<Window.Effect>
+		<DropShadowEffect/>
+	</Window.Effect>
+    <!--<Window.DataContext>
         <wm:ModelPlayer />
-    </Window.DataContext>
-    <Grid>
+    </Window.DataContext>-->
+    <Grid Name="MainLayoutGrid" Background="#2b2b2b" MouseDown="TitleBarGrid_MouseDown">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="270*" />
-            <RowDefinition Height="30*" />
+            <RowDefinition Height="4" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="4" />
         </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0"  Background="Black">
-            <Viewbox>
-                  <Grid>
-                    <MediaElement x:Name="mediaElement" VerticalAlignment="Center" Height="auto" Width="auto"
+        <Rectangle Opacity="0.0" Fill="#2b2b2b" Grid.Column="0" Grid.Row="0" Name="topLeft"     PreviewMouseLeftButtonDown="Resize" MouseMove="DisplayResizeCursor" />
+        <Rectangle Opacity="0.0" Fill="#2b2b2b" Grid.Column="0" Grid.Row="1" Name="left1"       PreviewMouseLeftButtonDown="Resize" MouseMove="DisplayResizeCursor" />
+        <Rectangle Opacity="0.0" Fill="#2b2b2b" Grid.Column="0" Grid.Row="2" Name="left"        PreviewMouseLeftButtonDown="Resize" MouseMove="DisplayResizeCursor" />
+        <Rectangle Opacity="0.0" Fill="#2b2b2b" Grid.Column="0" Grid.Row="3" Name="bottomLeft"  PreviewMouseLeftButtonDown="Resize" MouseMove="DisplayResizeCursor" />
+        <Rectangle Opacity="0.0" Fill="#2b2b2b" Grid.Column="1" Grid.Row="3" Name="bottom"      PreviewMouseLeftButtonDown="Resize" MouseMove="DisplayResizeCursor" />
+        <Rectangle Opacity="0.0" Fill="#2b2b2b" Grid.Column="2" Grid.Row="3" Name="bottomRight" PreviewMouseLeftButtonDown="Resize" MouseMove="DisplayResizeCursor" />
+        <Rectangle Opacity="0.0" Fill="#2b2b2b" Grid.Column="2" Grid.Row="2" Name="right"       PreviewMouseLeftButtonDown="Resize" MouseMove="DisplayResizeCursor" />
+        <Rectangle Opacity="0.0" Fill="#2b2b2b" Grid.Column="2" Grid.Row="1" Name="right1"      PreviewMouseLeftButtonDown="Resize" MouseMove="DisplayResizeCursor" />
+        <Rectangle Opacity="0.0" Fill="#2b2b2b" Grid.Column="2" Grid.Row="0" Name="topRight"    PreviewMouseLeftButtonDown="Resize" MouseMove="DisplayResizeCursor" />
+        <Rectangle Opacity="0.0" Fill="#2b2b2b" Grid.Column="1" Grid.Row="0" Name="top"         PreviewMouseLeftButtonDown="Resize" MouseMove="DisplayResizeCursor" />
+        <Grid Grid.Column="1" Grid.Row="1" Name="TitleBarGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="2" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="4" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!-- <Image Grid.Column="0" Name="ImgIcon" Stretch="Uniform" /> -->
+                    <TextBlock Grid.Column="2" Name="TitleTblk" Foreground="White">MainWindow</TextBlock>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Name="btnMin" Grid.Column="0" Click="btnMin_Click">-</Button>
+                <Button Name="btnMax" Grid.Column="1" Click="btnMax_Click">+</Button>
+                <Button Name="btnClose" Grid.Column="2" Click="btnClose_Click">Close</Button>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="2" Background="DarkGray">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="270*" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Viewbox>
+                    <Grid>
+                        <MediaElement x:Name="mediaElement" VerticalAlignment="Center" Height="auto" Width="auto"
                         Source="{Binding mediaElement.Source}"
                         LoadedBehavior="{Binding mediaElement.LoadedBehavior}"
                         Volume="{Binding mediaElement.Volume}" />
-                 </Grid>
-             </Viewbox>
-        </Grid>
+                    </Grid>
+                </Viewbox>
+            </Grid>
+            <Grid Grid.Row="1" Margin="8,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="113.801" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="62.829" />
+                </Grid.ColumnDefinitions>
+                <Button Command="{Binding PlayFile}" Height="23" Width="20" x:Name="LectureButton" HorizontalAlignment="Right" Margin="0,0,93.801,0" VerticalAlignment="Center">
+                    <Canvas Height="9.353" Width="8.68">
+                        <Path Visibility="{Binding VisiblePlay}" Height="9.353" Width="8.68" Fill="#FF2C5E90" Stretch="Fill" Data="M15.639187,16.184645 L15.627616,24.492212 L23.324333,20.374496 z"/>
+                        <StackPanel Visibility="{Binding VisiblePause}" Height="9.353" Width="8.68" Orientation="Horizontal">
+                            <Rectangle Height="9.353" Width="2.18" Fill="#FF2C5E90" Margin="0,0,1,0"/>
+                            <Rectangle Height="9.353" Width="2.18" Fill="#FF2C5E90" Margin="2,0,0,0"/>
+                        </StackPanel>
+                    </Canvas>
+                </Button>
 
-        <Grid Grid.Row="1"  Background="Black" Margin="8,0">
-             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="113.801" />
-                <ColumnDefinition />
-                <ColumnDefinition Width="62.829" />
-            </Grid.ColumnDefinitions>
-
-            <Button Command="{Binding PlayFile}" Height="23" Width="20" x:Name="LectureButton" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center">
-            	<Canvas Height="9.353" Width="8.68">
-            		<Path Visibility="{Binding VisiblePlay}" Height="9.353" Width="8.68" Fill="#FF2C5E90" Stretch="Fill" Data="M15.639187,16.184645 L15.627616,24.492212 L23.324333,20.374496 z"/>
-            		<StackPanel Visibility="{Binding VisiblePause}" Height="9.353" Width="8.68" Orientation="Horizontal">
-            			<Rectangle Height="9.353" Width="2.18" Fill="#FF2C5E90" Margin="0,0,1,0"/>
-            			<Rectangle Height="9.353" Width="2.18" Fill="#FF2C5E90" Margin="2,0,0,0"/>
-            		</StackPanel>
-            	</Canvas>
-            </Button>
-
-            <Button Command="{Binding StopFile}" x:Name="Stop" HorizontalAlignment="Left" VerticalAlignment="Center" Height="23" Width="20" Margin="25,0,0,0">
-            	<StackPanel Height="9.353" Width="9.353" Orientation="Horizontal">
-            		<Rectangle Height="9.353" Width="9.353" Fill="#FF2C5E90" />
-            	</StackPanel>
-            </Button>
-            <Button Command="{Binding FindRessource}" x:Name="Parcourir" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" Content="Parcourir..." BorderThickness="4,1,1,1" Cursor="Hand" Foreground="#FF2C5E90" Height="23"/>
-            <Slider Grid.Column="1" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="100" Value="{Binding Position, ElementName=mediaElement}"/>
-            <Slider x:Name="Volume" VerticalAlignment="Center" Value="{Binding ValueSoundContent}" SmallChange="1" Maximum="100" Margin="0,0,36,0" Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Right" Height="43" />
-            <TextBox Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="txtValue" Text="{Binding Value, ElementName=Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="22" Width="30" Margin="0"/>
+                <Button Command="{Binding StopFile}" x:Name="Stop" HorizontalAlignment="Left" VerticalAlignment="Center" Height="23" Width="20" Margin="25,0,0,0">
+                    <StackPanel Height="9.353" Width="9.353" Orientation="Horizontal">
+                        <Rectangle Height="9.353" Width="9.353" Fill="#FF2C5E90" />
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding FindRessource}" x:Name="Parcourir" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" Content="Parcourir..." BorderThickness="4,1,1,1" Cursor="Hand" Foreground="#FF2C5E90" Height="23"/>
+                <!-- <Slider Grid.Column="1" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="100" Value="{Binding Position, ElementName=mediaElement}" ValueChanged="Slider_ValueChanged" /> -->
+                <Slider x:Name="Volume"  Value="{Binding ValueSoundContent}" SmallChange="1" Maximum="100" Margin="0,0,36,0" Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Right" />
+                <TextBox Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="txtValue" Text="{Binding Value, ElementName=Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="22" Width="30" Margin="0"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

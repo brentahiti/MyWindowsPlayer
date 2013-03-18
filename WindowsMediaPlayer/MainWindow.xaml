@@ -10,8 +10,9 @@
         WindowStyle="None"
         AllowsTransparency="True"
         PreviewMouseMove="ResetCursor"
-    xmlns:wm="clr-namespace:WindowsMediaPlayer"
+    WindowStartupLocation="CenterScreen"
     >
+<!--    xmlns:wm="clr-namespace:WindowsMediaPlayer" -->
     <Window.Resources>
         <ControlTemplate x:Key="ButtonControlTemplateMediaPlayer" TargetType="{x:Type Button}">
 			<Border x:Name="border" CornerRadius="2">
@@ -139,9 +140,11 @@
 	<Window.Effect>
 		<DropShadowEffect/>
 	</Window.Effect>
+ <!--
     <Window.DataContext>
         <wm:ModelPlayer />
     </Window.DataContext>
+-->
     <Grid Name="MainLayoutGrid" Background="#2b2b2b" MouseDown="TitleBarGrid_MouseDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4" />
@@ -182,7 +185,7 @@
                         <ColumnDefinition Width="4" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Name="ImgIcon" Stretch="Uniform" Source="logo.gif" />
+                    <!--<Image Grid.Column="0" Name="ImgIcon" Stretch="Uniform" Source="logo.gif" />-->
                     <TextBlock Grid.Column="2" Name="TitleTblk" Foreground="White" Text="WindowMediaPlayer"/>
                 </Grid>
             </Grid>
@@ -214,10 +217,11 @@
             </Grid>
             <Grid Grid.Row="1" Margin="8,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="113.801" />
+                    <ColumnDefinition Width="139" />
                     <ColumnDefinition />
                     <ColumnDefinition Width="62.829" />
                 </Grid.ColumnDefinitions>
+				
                 <Button Template="{DynamicResource ButtonWMP}" Command="{Binding PlayFile}" Height="23" Width="20" x:Name="LectureButton" HorizontalAlignment="Right" Margin="0,0,93.801,0" VerticalAlignment="Center">
                     <Canvas Height="9.353" Width="8.68">
                         <Path Visibility="{Binding VisiblePlay}" Height="9.353" Width="8.68" Fill="#FFFBFBFB" Stretch="Fill" Data="M15.639187,16.184645 L15.627616,24.492212 L23.324333,20.374496 z"/>
@@ -228,7 +232,8 @@
                     </Canvas>
                 </Button>
 
-                <Button Command="{Binding StopFile}"  Template="{DynamicResource ButtonWMP}" x:Name="Stop" HorizontalAlignment="Left" VerticalAlignment="Center" Height="23" Width="20" Margin="25,0,0,0">
+                <Button  Template="{DynamicResource ButtonWMP}" x:Name="full" VerticalAlignment="Center" Height="23" Margin="51,0,0,0" Width="19" HorizontalAlignment="Left" Click="full_Click" Content="+" Foreground="White"/>
+                <Button Command="{Binding StopFile}"  Template="{DynamicResource ButtonWMP}" x:Name="Stop" VerticalAlignment="Center" Height="23" Margin="0,0,0,0" Width="19" HorizontalAlignment="Left">
                     <StackPanel Height="9.353" Width="9.353" Orientation="Horizontal">
                         <Rectangle Height="9.353" Width="9.353" Fill="#FFFBFBFB" />
                     </StackPanel>

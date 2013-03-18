@@ -175,6 +175,18 @@ namespace WindowsMediaPlayer
             }
         }
 
+        private void full_Click(object sender, RoutedEventArgs e)
+        {
+            if (!this.Topmost)
+            {
+                this.Topmost = true;
+                this.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                this.Topmost = true;
+            }
+        }
     }
 
     /// <summary>

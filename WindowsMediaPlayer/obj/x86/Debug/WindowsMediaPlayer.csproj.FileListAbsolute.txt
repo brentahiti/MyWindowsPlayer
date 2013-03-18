@@ -11,3 +11,5 @@
 \\vmware-host\Shared Folders\Desktop\MyWindowsPlayer\WindowsMediaPlayer\obj\x86\Debug\GenerateResource.write.1.tlog
 \\vmware-host\Shared Folders\Desktop\MyWindowsPlayer\WindowsMediaPlayer\obj\x86\Debug\WindowsMediaPlayer.exe
 \\vmware-host\Shared Folders\Desktop\MyWindowsPlayer\WindowsMediaPlayer\obj\x86\Debug\WindowsMediaPlayer.pdb
+\\vmware-host\Shared Folders\Desktop\MyWindowsPlayer\WindowsMediaPlayer\obj\x86\Debug\WindowsMediaPlayer_MarkupCompile.lref
+\\vmware-host\Shared Folders\Desktop\MyWindowsPlayer\WindowsMediaPlayer\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs

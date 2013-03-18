@@ -140,7 +140,7 @@
 		<DropShadowEffect/>
 	</Window.Effect>
     <Window.DataContext>
-        <wm:ModelPlayer />
+        <wm:ViewModelPlayer />
     </Window.DataContext>
     <Grid Name="MainLayoutGrid" Background="#2b2b2b" MouseDown="TitleBarGrid_MouseDown">
         <Grid.ColumnDefinitions>

@@ -41,6 +41,10 @@ namespace WindowsMediaPlayer
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
+        private List<double> _colsDefinition = new List<double> ();
+        private List<double> _rowsDefinition = new List<double> ();
+        private Brush BgNormal;
+
         public enum ResizeDirection
         {
             Left = 1,
@@ -62,6 +66,25 @@ namespace WindowsMediaPlayer
         {
             this.Action = new Modele();
             this.hwndSource = PresentationSource.FromVisual((Visual)sender) as HwndSource;
+
+            var row = this.MainLayoutGrid.ColumnDefinitions;
+            for (var i = 0; i < row.Count(); i++)
+            {
+                var current = row.ElementAt(i);
+                if (current.Width.GridUnitType == GridUnitType.Pixel)
+                    this._rowsDefinition.Add(current.Width.Value);
+            }
+
+            var col = this.MainLayoutGrid.RowDefinitions;
+            for (var i = 0; i < col.Count(); i++)
+            {
+                var current = col.ElementAt(i);
+                if (current.Height.GridUnitType == GridUnitType.Pixel)
+                    this._colsDefinition.Add(current.Height.Value);
+            }
+
+            this.BgNormal = this.MainContent.Background;
+
         }
 
         private void ResizeWindow(ResizeDirection d)
@@ -181,11 +204,51 @@ namespace WindowsMediaPlayer
             {
                 this.Topmost = true;
                 this.WindowState = WindowState.Maximized;
+                this.full.Content = "-";
+                this.MainContent.Background = Brushes.Black;
+
+                var row = this.MainLayoutGrid.ColumnDefinitions;
+                for (var i = 0; i < row.Count(); i++)
+                {
+                    var current = row.ElementAt(i);
+                    if (current.Width.GridUnitType == GridUnitType.Pixel)
+                        current.Width = new GridLength(0, GridUnitType.Pixel);
+                }
+
+                var col = this.MainLayoutGrid.RowDefinitions;
+                for (var i = 0; i < col.Count(); i++)
+                {
+                    var current = col.ElementAt(i);
+                    if (current.Height.GridUnitType == GridUnitType.Pixel)
+                        current.Height = new GridLength(0, GridUnitType.Pixel);
+                }
             }
             else
             {
-                this.Topmost = true;
+                this.WindowState = WindowState.Normal;
+                this.full.Content = "+";
+                this.Topmost = false;
+                this.MainContent.Background = this.BgNormal;
+
+                var row = this.MainLayoutGrid.ColumnDefinitions;
+                int idxSave = 0;
+                for (var i = 0; i < row.Count(); i++)
+                {
+                    var current = row.ElementAt(i);
+                    if (current.Width.GridUnitType == GridUnitType.Pixel)
+                        current.Width = new GridLength(this._rowsDefinition.ElementAt(idxSave++), GridUnitType.Pixel);
+                }
+
+                var col = this.MainLayoutGrid.RowDefinitions;
+                idxSave = 0;
+                for (var i = 0; i < col.Count(); i++)
+                {
+                    var current = col.ElementAt(i);
+                    if (current.Height.GridUnitType == GridUnitType.Pixel)
+                        current.Height = new GridLength(this._colsDefinition.ElementAt(idxSave++), GridUnitType.Pixel);
+                }
             }
+
         }
     }
 

@@ -170,7 +170,6 @@ namespace WindowsMediaPlayer
         private void DisplayResizeCursor(object sender, MouseEventArgs e)
         {
             Rectangle hoveredRectangle = sender as Rectangle;
-            Console.WriteLine(hoveredRectangle.Name);
             switch (hoveredRectangle.Name)
             {
                 case "top":

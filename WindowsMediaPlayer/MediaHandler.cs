@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace WindowsMediaPlayer
 {
@@ -13,6 +14,7 @@ namespace WindowsMediaPlayer
 
     class MediaHandler
     {
+        private DispatcherTimer mediaTimer;
         private ePlayState playState;
         public ePlayState PlayState
         {
@@ -24,19 +26,29 @@ namespace WindowsMediaPlayer
                     this.FileEvent(this, new FileEventArg(this.PlayState));
             }
         }
-        public MediaElement MediaPlayer { get; set; }
+        public MediaElement MediaPlayer { get; private set; }
         public RessourceManager RessourceManager { get; private set; }
+        public Slider ProgressBar { get; private set; }
+        public TimeSpan FileDuration { get; private set; }
 
         public event EventHandler<FileEventArg> FileEvent;
+        public event EventHandler FileLoaded;
 
         public MediaHandler(RessourceManager rm)
         {
             this.PlayState = ePlayState.Stop;
+
             this.MediaPlayer = new MediaElement();
             this.MediaPlayer.VerticalAlignment = VerticalAlignment.Center;
             this.MediaPlayer.Height = Double.NaN;
             this.MediaPlayer.Width = Double.NaN;
             this.MediaPlayer.LoadedBehavior = MediaState.Manual;
+            this.MediaPlayer.MediaOpened += new RoutedEventHandler(OnMediaOpened);
+
+            this.ProgressBar = new Slider();
+            this.ProgressBar.Value = 0.0;
+            this.ProgressBar.Maximum = 1.0;
+            this.ProgressBar.MouseLeftButtonUp += new MouseButtonEventHandler(OnClickProgressBar);
 
             this.RessourceManager = rm;
         }
@@ -68,6 +80,38 @@ namespace WindowsMediaPlayer
             {
                 this.MediaPlayer.Stop();
                 this.PlayState = ePlayState.Stop;
+            }
+        }
+
+        private void OnMediaOpened(object sender, RoutedEventArgs e)
+        {
+            this.FileDuration = this.MediaPlayer.NaturalDuration.TimeSpan;
+            this.ProgressBar.Maximum = this.MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+
+            this.mediaTimer = new DispatcherTimer();
+            this.mediaTimer.Interval = TimeSpan.FromSeconds(1);
+            this.mediaTimer.Tick += new EventHandler(MediaTimerTick);
+            this.mediaTimer.Start();
+
+            if (this.FileLoaded != null)
+            {
+                this.FileLoaded(this, new EventArgs());
+            }
+        }
+
+        private void MediaTimerTick(object sender, EventArgs e)
+        {
+            if (this.ProgressBar.Maximum > 0)
+            {
+                this.ProgressBar.Value = this.MediaPlayer.Position.TotalSeconds;
+            }
+        }
+
+        private void OnClickProgressBar(object sender, MouseButtonEventArgs e)
+        {
+            if (this.ProgressBar.Maximum > 0)
+            {
+                this.MediaPlayer.Position = TimeSpan.FromSeconds(this.ProgressBar.Value);
             }
         }
     }

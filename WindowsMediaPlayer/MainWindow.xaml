@@ -255,7 +255,7 @@
                         </LinearGradientBrush>
                     </Button.Background>
                 </Button>
-                <Slider Grid.Column="1" Margin="14,9,86,9" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="100" Value="{Binding ProgressBarVal}" Width="577" Maximum="{Binding ProgressBarMax}" />
+                <ContentControl Grid.Column="1" Margin="14,9,86,9" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="100" Width="577" Content="{Binding ProgressBar}" />
                 <TextBox Height="22" HorizontalAlignment="Right" Margin="0,8,4,10" Name="textBox1" Text="{Binding ProgressBarMaxSpan, StringFormat={}{0:hh':'mm':'ss}}" VerticalAlignment="Center" Width="55" Grid.Column="1" />
                 <Slider x:Name="Volume"  Value="{Binding ValueSoundContent}" SmallChange="1" Maximum="100" Margin="0,0,36,0" Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Right" />
                 <TextBox Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="txtValue" Text="{Binding Value, ElementName=Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="22" Width="30" Margin="0"/>

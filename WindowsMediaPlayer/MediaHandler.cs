@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace WindowsMediaPlayer
 {
@@ -32,8 +33,10 @@ namespace WindowsMediaPlayer
         {
             this.PlayState = ePlayState.Stop;
             this.MediaPlayer = new MediaElement();
-
-            this.MediaPlayer.LoadedBehavior = MediaState.Play;
+            this.MediaPlayer.VerticalAlignment = VerticalAlignment.Center;
+            this.MediaPlayer.Height = Double.NaN;
+            this.MediaPlayer.Width = Double.NaN;
+            this.MediaPlayer.LoadedBehavior = MediaState.Manual;
 
             this.RessourceManager = rm;
         }
@@ -44,7 +47,7 @@ namespace WindowsMediaPlayer
             {
                 if (this.PlayState == ePlayState.Play)
                 {
-                    this.MediaPlayer.LoadedBehavior = MediaState.Pause;
+                    this.MediaPlayer.Pause();
                     this.PlayState = ePlayState.Pause;
                 }
                 else
@@ -53,7 +56,7 @@ namespace WindowsMediaPlayer
                     {
                         this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.FilePath, UriKind.Relative));
                     }
-                    this.MediaPlayer.LoadedBehavior = MediaState.Play;
+                    this.MediaPlayer.Play();
                     this.PlayState = ePlayState.Play;
                 }
             }
@@ -63,7 +66,7 @@ namespace WindowsMediaPlayer
         {
             if (this.PlayState != ePlayState.Stop)
             {
-                this.MediaPlayer.LoadedBehavior = MediaState.Stop;
+                this.MediaPlayer.Stop();
                 this.PlayState = ePlayState.Stop;
             }
         }

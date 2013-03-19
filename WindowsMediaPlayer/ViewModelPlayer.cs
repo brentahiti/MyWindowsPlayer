@@ -5,6 +5,8 @@ using System.Text;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace WindowsMediaPlayer
 {
@@ -23,16 +25,7 @@ namespace WindowsMediaPlayer
 
     public class ViewModelPlayer : ViewModelBase
     {
-        private RessourceManager ressourceManager;
-        private MediaHandler mediaHandler;
-        public MediaElement mediaElement { get; set; }
-
-        public ICommand FindRessource { get; private set; }
-        public ICommand PlayFile { get; private set; }
-        public ICommand StopFile { get; private set; }
-
         private string visiblePlay;
-        private string visiblePause;
         public string VisiblePlay
         {
             get { return this.visiblePlay; }
@@ -42,6 +35,7 @@ namespace WindowsMediaPlayer
                 NotifyPropertyChanged("VisiblePlay");
             }
         }
+        private string visiblePause;
         public string VisiblePause // { get; private set; }
         {
             get { return this.visiblePause; }
@@ -59,11 +53,54 @@ namespace WindowsMediaPlayer
             set
             {
                 this.valueSoundContent = value;
-                this.mediaElement.Volume = this.valueSoundContent / 100;
+                this.mediaHandler.MediaPlayer.Volume = this.valueSoundContent / 100.0;
                 NotifyPropertyChanged("ValueSoundContent");
             }
         }
+        private double progressBarMax;
+        public double ProgressBarMax
+        {
+            get { return this.progressBarMax; }
+            set
+            {
+                this.progressBarMax = value;
+                NotifyPropertyChanged("ProgressBarMax");
+            }
+        }
+        private double progressBarVal;
+        public double ProgressBarVal
+        {
+            get { return this.progressBarVal; }
+            set
+            {
+                this.progressBarVal = value;
+                NotifyPropertyChanged("ProgressBarVal");
+            }
+        }
+        private TimeSpan progressBarMaxSpan;
+        public TimeSpan ProgressBarMaxSpan
+        {
+            get { return this.progressBarMaxSpan; }
+            set
+            {
+                this.progressBarMaxSpan = value;
+                NotifyPropertyChanged("ProgressBarMaxSpan");
+            }
+        }
+        public MediaElement MyMediaPlayer
+        {
+            get { return this.mediaHandler.MediaPlayer; }
+        }
 
+
+        private RessourceManager ressourceManager;
+        private MediaHandler mediaHandler;
+        private DispatcherTimer mediaTimer;
+
+        public ICommand FindRessource { get; private set; }
+        public ICommand PlayFile { get; private set; }
+        public ICommand StopFile { get; private set; }
+        
         public ViewModelPlayer()
         {
             this.ressourceManager = new RessourceManager();
@@ -72,16 +109,18 @@ namespace WindowsMediaPlayer
             this.FindRessource = new RelayCommand(this.ressourceManager.FindRessource);
             this.PlayFile = new RelayCommand(this.mediaHandler.PlayFile);
             this.StopFile = new RelayCommand(this.mediaHandler.StopFile);
-            this.mediaElement = this.mediaHandler.MediaPlayer;
 
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
+            this.mediaHandler.MediaPlayer.MediaOpened += new RoutedEventHandler(OnMediaOpened);
 
             this.ValueSoundContent = 50.0;
             this.VisiblePlay = "Visible";
             this.VisiblePause = "Hidden";
+            this.ProgressBarVal = 0.0;
+            this.ProgressBarMax = 1.0;
         }
 
-        public void ChangeLectureContent(object sender, FileEventArg e)
+        private void ChangeLectureContent(object sender, FileEventArg e)
         {
             Console.WriteLine("ok");
             if (e.State == ePlayState.Play)
@@ -93,6 +132,25 @@ namespace WindowsMediaPlayer
             {
                 this.VisiblePlay = "Visible";
                 this.VisiblePause = "Hidden";
+            }
+        }
+
+        private void OnMediaOpened(object sender, RoutedEventArgs e)
+        {
+            this.ProgressBarMaxSpan = this.mediaHandler.MediaPlayer.NaturalDuration.TimeSpan;
+            this.ProgressBarMax = this.ProgressBarMaxSpan.TotalSeconds;
+
+            this.mediaTimer = new DispatcherTimer();
+            this.mediaTimer.Interval = TimeSpan.FromSeconds(1);
+            this.mediaTimer.Tick += new EventHandler(MediaTimerTick);
+            this.mediaTimer.Start();
+        }
+
+        private void MediaTimerTick(object sender, EventArgs e)
+        {
+            if (this.ProgressBarMax > 0)
+            {
+                this.ProgressBarVal = this.mediaHandler.MediaPlayer.Position.TotalSeconds;
             }
         }
     }

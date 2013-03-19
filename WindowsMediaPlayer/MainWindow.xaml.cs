@@ -249,6 +249,11 @@ namespace WindowsMediaPlayer
             }
 
         }
+
+        private void mediaElement_Drop(object sender, DragEventArgs e)
+        {
+            Console.WriteLine((string)((DataObject)e.Data).GetFileDropList()[0]);
+        }
     }
 
     /// <summary>

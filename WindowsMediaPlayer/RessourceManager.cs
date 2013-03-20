@@ -88,6 +88,10 @@ namespace WindowsMediaPlayer
             if (result == true)
             {
                 this.FileFound = true;
+                this.currentElementInPlaylist = 0;
+                this.playlistFound = false;
+                this.numberElementInPlaylist = 0;
+                this.playlist.playList.Clear();
                 this.FilePath = windowsDial.FileName;
             }
             else

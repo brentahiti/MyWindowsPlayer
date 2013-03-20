@@ -128,8 +128,11 @@ namespace WindowsMediaPlayer
 
         private void OnFileEnded(object sender, EventArgs e)
         {
-            this.mediaHandler.PlayState = ePlayState.Stop;
-            this.mediaHandler.PlayFile();
+            if (this.ressourceManager.playlistFound == true)
+            {
+                this.mediaHandler.PlayState = ePlayState.Stop;
+                this.mediaHandler.PlayFile();
+            }
         }
     }
 }

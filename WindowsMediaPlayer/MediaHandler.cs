@@ -51,6 +51,7 @@ namespace WindowsMediaPlayer
             this.ProgressBar = new Slider();
             this.ProgressBar.Value = 0.0;
             this.ProgressBar.Maximum = 1.0;
+            this.ProgressBar.ValueChanged += new RoutedPropertyChangedEventHandler<double>(OnSliderValueChange);
             //MediaHandler.GetThumb(this.ProgressBar).DragCompleted += new DragCompletedEventHandler(OnSliderDragCompleted);
             //this.ProgressBar.MouseLeftButtonUp += new MouseButtonEventHandler(OnClickProgressBar);
 
@@ -136,14 +137,22 @@ namespace WindowsMediaPlayer
             }
         }
 
-        private void OnSliderDragCompleted(object sender, DragCompletedEventArgs e)
+        private void OnSliderValueChange(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Console.WriteLine("Aaaaaaaa");
             if (this.ProgressBar.Maximum > 0)
             {
                 this.MediaPlayer.Position = TimeSpan.FromSeconds(this.ProgressBar.Value);
             }
         }
+
+        //private void OnSliderDragCompleted(object sender, DragCompletedEventArgs e)
+        //{
+        //    Console.WriteLine("Aaaaaaaa");
+        //    if (this.ProgressBar.Maximum > 0)
+        //    {
+        //        this.MediaPlayer.Position = TimeSpan.FromSeconds(this.ProgressBar.Value);
+        //    }
+        //}
     }
 
     public class FileEventArg : EventArgs

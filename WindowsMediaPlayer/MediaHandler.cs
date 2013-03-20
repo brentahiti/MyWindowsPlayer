@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Threading;
+using System.Windows.Controls.Primitives;
 
 namespace WindowsMediaPlayer
 {
@@ -33,6 +34,7 @@ namespace WindowsMediaPlayer
 
         public event EventHandler<FileEventArg> FileEvent;
         public event EventHandler FileLoaded;
+        public event EventHandler FileEnded;
 
         public MediaHandler(RessourceManager rm)
         {
@@ -44,11 +46,13 @@ namespace WindowsMediaPlayer
             this.MediaPlayer.Width = Double.NaN;
             this.MediaPlayer.LoadedBehavior = MediaState.Manual;
             this.MediaPlayer.MediaOpened += new RoutedEventHandler(OnMediaOpened);
+            this.MediaPlayer.MediaEnded += new RoutedEventHandler(OnMediaEnd);
 
             this.ProgressBar = new Slider();
             this.ProgressBar.Value = 0.0;
             this.ProgressBar.Maximum = 1.0;
-            this.ProgressBar.MouseLeftButtonUp += new MouseButtonEventHandler(OnClickProgressBar);
+            //MediaHandler.GetThumb(this.ProgressBar).DragCompleted += new DragCompletedEventHandler(OnSliderDragCompleted);
+            //this.ProgressBar.MouseLeftButtonUp += new MouseButtonEventHandler(OnClickProgressBar);
 
             this.RessourceManager = rm;
         }
@@ -92,6 +96,14 @@ namespace WindowsMediaPlayer
             }
         }
 
+        private static Thumb GetThumb(Slider slider)
+        {
+            slider.Measure(new Size(200, 200));
+            slider.Arrange(new Rect(0, 0, 200, 200));
+            var track = slider.Template.FindName("PART_Track", slider) as Track;
+            return track == null ? null : track.Thumb;
+        }
+
         private void OnMediaOpened(object sender, RoutedEventArgs e)
         {
             this.FileDuration = this.MediaPlayer.NaturalDuration.TimeSpan;
@@ -108,6 +120,14 @@ namespace WindowsMediaPlayer
             }
         }
 
+        private void OnMediaEnd(object sender, RoutedEventArgs e)
+        {
+            if (this.FileEnded != null)
+            {
+                this.FileEnded(this, new EventArgs());
+            }
+        }
+
         private void MediaTimerTick(object sender, EventArgs e)
         {
             if (this.ProgressBar.Maximum > 0)
@@ -116,8 +136,9 @@ namespace WindowsMediaPlayer
             }
         }
 
-        private void OnClickProgressBar(object sender, MouseButtonEventArgs e)
+        private void OnSliderDragCompleted(object sender, DragCompletedEventArgs e)
         {
+            Console.WriteLine("Aaaaaaaa");
             if (this.ProgressBar.Maximum > 0)
             {
                 this.MediaPlayer.Position = TimeSpan.FromSeconds(this.ProgressBar.Value);

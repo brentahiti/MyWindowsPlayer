@@ -99,6 +99,7 @@ namespace WindowsMediaPlayer
 
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
             this.mediaHandler.FileLoaded += new EventHandler(OnFileLoaded);
+            this.mediaHandler.FileEnded += new EventHandler(OnFileEnded);
 
             this.ValueSoundContent = 50.0;
             this.VisiblePlay = "Visible";
@@ -123,6 +124,10 @@ namespace WindowsMediaPlayer
         private void OnFileLoaded(object sender, EventArgs e)
         {
             this.ProgressBarMaxSpan = this.mediaHandler.FileDuration;
+        }
+
+        private void OnFileEnded(object sender, EventArgs e)
+        {
         }
     }
 }

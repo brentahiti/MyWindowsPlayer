@@ -49,7 +49,7 @@ namespace WindowsMediaPlayer
 
         public void SavePlayList()
         {
-            OpenFileDialog windowsDial = new OpenFileDialog();
+            SaveFileDialog windowsDial = new SaveFileDialog();
             windowsDial.FileName = "PlayList";
             windowsDial.DefaultExt = "xml";
             windowsDial.Filter = "Fichier xml(*.xml)|*.xml";

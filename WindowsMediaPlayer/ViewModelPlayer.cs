@@ -81,6 +81,9 @@ namespace WindowsMediaPlayer
         public ICommand FindRessource { get; private set; }
         public ICommand PlayFile { get; private set; }
         public ICommand StopFile { get; private set; }
+        public ICommand SavePlayList { get; private set; }
+        public ICommand LoadPlayList { get; private set; }
+        public ICommand AddElementInPlaylist { get; private set; }
         
         public ViewModelPlayer()
         {
@@ -90,6 +93,9 @@ namespace WindowsMediaPlayer
             this.FindRessource = new RelayCommand(this.ressourceManager.FindRessource);
             this.PlayFile = new RelayCommand(this.mediaHandler.PlayFile);
             this.StopFile = new RelayCommand(this.mediaHandler.StopFile);
+            this.SavePlayList = new RelayCommand(this.ressourceManager.SavePlayList);
+            this.LoadPlayList = new RelayCommand(this.ressourceManager.LoadPlayList);
+            this.AddElementInPlaylist = new RelayCommand(this.ressourceManager.AddElementInPlaylist);
 
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
             this.mediaHandler.FileLoaded += new EventHandler(OnFileLoaded);

@@ -64,9 +64,17 @@ namespace WindowsMediaPlayer
                 }
                 else
                 {
+
                     if (this.PlayState == ePlayState.Stop)
                     {
-                        this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.FilePath, UriKind.Relative));
+                        if (this.RessourceManager.playlistFound
+                            && (this.RessourceManager.currentElementInPlaylist < this.RessourceManager.numberElementInPlaylist))
+                        {
+                            this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.playlist.playList[this.RessourceManager.currentElementInPlaylist].Path, UriKind.Relative));
+                            ++(this.RessourceManager.currentElementInPlaylist);
+                        }
+                        else
+                            this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.FilePath, UriKind.Relative));
                     }
                     this.MediaPlayer.Play();
                     this.PlayState = ePlayState.Play;
@@ -80,6 +88,7 @@ namespace WindowsMediaPlayer
             {
                 this.MediaPlayer.Stop();
                 this.PlayState = ePlayState.Stop;
+                this.RessourceManager.currentElementInPlaylist = 0;
             }
         }
 

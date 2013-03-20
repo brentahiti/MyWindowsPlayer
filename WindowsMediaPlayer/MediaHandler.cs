@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media.Imaging;
 
 namespace WindowsMediaPlayer
 {
@@ -51,9 +52,9 @@ namespace WindowsMediaPlayer
             this.ProgressBar = new Slider();
             this.ProgressBar.Value = 0.0;
             this.ProgressBar.Maximum = 1.0;
+            this.ProgressBar.IsMoveToPointEnabled = true;
             this.ProgressBar.ValueChanged += new RoutedPropertyChangedEventHandler<double>(OnSliderValueChange);
             //MediaHandler.GetThumb(this.ProgressBar).DragCompleted += new DragCompletedEventHandler(OnSliderDragCompleted);
-            //this.ProgressBar.MouseLeftButtonUp += new MouseButtonEventHandler(OnClickProgressBar);
 
             this.RessourceManager = rm;
         }
@@ -99,8 +100,16 @@ namespace WindowsMediaPlayer
 
         private static Thumb GetThumb(Slider slider)
         {
-            slider.Measure(new Size(200, 200));
-            slider.Arrange(new Rect(0, 0, 200, 200));
+            //slider.Measure(new Size(200, 200));
+            //slider.Arrange(new Rect(0, 0, 200, 200));
+            //Viewbox v = new Viewbox();
+            //v.Child = slider;
+            //v.Measure(new System.Windows.Size(200, 200));
+            //v.Arrange(new Rect(0, 0, 200, 200));
+            //v.UpdateLayout();
+            //RenderTargetBitmap render = new RenderTargetBitmap(200, 200, 150, 150, PixelFormats.Pbgra32);
+            //render.Render(v);
+            slider.ApplyTemplate();
             var track = slider.Template.FindName("PART_Track", slider) as Track;
             return track == null ? null : track.Thumb;
         }

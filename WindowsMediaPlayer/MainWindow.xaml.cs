@@ -38,6 +38,8 @@ namespace WindowsMediaPlayer
         private List<double> _rowsDefinition = new List<double> ();
         private Brush BgNormal;
 
+        private bool isFullScreen = false;
+
         public enum ResizeDirection
         {
             Left = 1,
@@ -81,7 +83,8 @@ namespace WindowsMediaPlayer
 
         private void ResizeWindow(ResizeDirection d)
         {
-            SendMessage(hwndSource.Handle, WM_SYSCOMMAND, (IntPtr)(61440 + d), IntPtr.Zero);
+            if (!this.isFullScreen)
+                SendMessage(hwndSource.Handle, WM_SYSCOMMAND, (IntPtr)(61440 + d), IntPtr.Zero);
         }
 
         private void TitleBarGrid_MouseDown(object sender, MouseButtonEventArgs e)
@@ -199,6 +202,7 @@ namespace WindowsMediaPlayer
                 this.BorderFullScreen4.BorderThickness = new System.Windows.Thickness(0, 0, 1, 1);
 
                 this.Topmost = true;
+                this.isFullScreen = true;
                 this.WindowState = WindowState.Maximized;
                 this.MainContent.Background = Brushes.Black;
 
@@ -226,6 +230,7 @@ namespace WindowsMediaPlayer
                 this.BorderFullScreen4.BorderThickness = new System.Windows.Thickness(1, 1, 0, 0);
 
                 this.WindowState = WindowState.Normal;
+                this.isFullScreen = false;
                 this.Topmost = false;
                 this.MainContent.Background = this.BgNormal;
 
@@ -246,6 +251,7 @@ namespace WindowsMediaPlayer
                     if (current.Height.GridUnitType == GridUnitType.Pixel)
                         current.Height = new GridLength(this._colsDefinition.ElementAt(idxSave++), GridUnitType.Pixel);
                 }
+
             }
 
         }
@@ -253,6 +259,14 @@ namespace WindowsMediaPlayer
         private void mediaElement_Drop(object sender, DragEventArgs e)
         {
             Console.WriteLine((string)((DataObject)e.Data).GetFileDropList()[0]);
+        }
+
+        private void TogglePlayListGrid(object sender, RoutedEventArgs e)
+        {
+            if (this.PlayListGrid.Visibility == System.Windows.Visibility.Visible)
+                this.PlayListGrid.Visibility = System.Windows.Visibility.Hidden;
+            else
+                this.PlayListGrid.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }

@@ -4,17 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="WindowsMediaPlayer.MainWindow"
         Title="MainWindow" Height="290" Width="925"
         Loaded="Window_Loaded"
-        Background="Transparent"
-        Foreground="{x:Null}"
-        WindowState="Normal"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        AllowDrop="True"
+        Background="Transparent" Foreground="{x:Null}" AllowsTransparency="True"
+        WindowState="Normal" WindowStyle="None"
+        AllowDrop="True" Drop="mediaElement_Drop"
         PreviewMouseMove="ResetCursor"
-    WindowStartupLocation="CenterScreen"
-    xmlns:wm="clr-namespace:WindowsMediaPlayer"
-    Drop="mediaElement_Drop"
-    Icon="logo.gif"
+        WindowStartupLocation="CenterScreen"
+        xmlns:wm="clr-namespace:WindowsMediaPlayer"
+        Icon="logo.gif"
     >
     <!--
     -->
@@ -190,7 +186,7 @@
                         <ColumnDefinition Width="4" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <!--<Image Grid.Column="0" Name="ImgIcon" Stretch="Uniform" Source="logo.gif" /> -->
+                    <Image Grid.Column="0" Name="ImgIcon" Stretch="Uniform" Source="logo.gif" />
                     <TextBlock Grid.Column="2" Name="TitleTblk" Foreground="White" Text="WindowMediaPlayer"/>
                 </Grid>
             </Grid>
@@ -205,7 +201,7 @@
                 <Button Name="btnClose" Grid.Column="2" Click="btnClose_Click" Template="{DynamicResource ButtonWMP}" Foreground="White" Margin="0,0,0,1">Close</Button>
             </Grid>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="2" Background="DarkGray" x:Name="MainContent" Margin="0,-4,0,4">
+        <Grid Grid.Column="1" Grid.Row="2" Background="DarkGray" x:Name="MainContent" Margin="0,0,0,4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="270*" />
                 <RowDefinition Height="40" />
@@ -227,10 +223,10 @@
                         Volume="{Binding mediaElement.Volume}" />-->
                         </Grid>
                     </Viewbox>
-                    <Grid Grid.Column="0">
-                        <Button Command="{Binding AddElementInPlaylist}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add" Foreground="White" Margin="0,3,0,0"/>
-                        <Button Command="{Binding LoadPlayList}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Load" Foreground="White" Margin="0,3,0,0"/>
-                        <Button Command="{Binding SavePlayList}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Save" Foreground="White" Margin="0,3,0,0"/>
+                    <Grid Grid.Column="0" x:Name="PlayListGrid">
+                        <Button Command="{Binding AddElementInPlaylist}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add" Foreground="White" Margin="0,3,0,0" Height="18"/>
+                        <Button Command="{Binding LoadPlayList}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Load" Foreground="White" Margin="60,3,0,0" Height="18"/>
+                        <Button Command="{Binding SavePlayList}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Save" Foreground="White" Margin="120,3,0,0" Height="18"/>
                         <ListBox Grid.Column="0" Margin="0,25,0,0" Background="Transparent">
                             <ListBoxItem Content="42:42 - Toto.avi" />
                             <ListBoxItem Content="42:42 - Toto.avi" />
@@ -243,16 +239,10 @@
             </Grid>
             <Grid Grid.Row="1" Margin="8,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="167.333" />
+                    <ColumnDefinition Width="186" />
                     <ColumnDefinition />
                     <ColumnDefinition Width="62.829" />
                 </Grid.ColumnDefinitions>
-
-
-                <Grid Grid.Column="1">
-                </Grid>
-
-
                 <Button Template="{DynamicResource ButtonWMP}" Command="{Binding PlayFile}" Height="23" Width="20" x:Name="LectureButton" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center">
                     <Canvas Height="9.353" Width="8.68">
                         <Path Visibility="{Binding VisiblePlay}" Height="9.353" Width="8.68" Fill="#FFFBFBFB" Stretch="Fill" Data="M15.639187,16.184645 L15.627616,24.492212 L23.324333,20.374496 z"/>
@@ -262,7 +252,6 @@
                         </StackPanel>
                     </Canvas>
                 </Button>
-
                 <Button  Template="{DynamicResource ButtonWMP}" x:Name="full" VerticalAlignment="Center" Height="23" Margin="53.668,0,0,0" Click="full_Click" Foreground="White" HorizontalAlignment="Left" Width="23">
                     <Canvas Height="20" Width="20">
                         <Border Height="4.5" x:Name="BorderFullScreen1" Canvas.Left="12.75" Canvas.Top="11.75" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="0,0,1,1" />
@@ -271,13 +260,22 @@
                         <Border Height="4.5" x:Name="BorderFullScreen4" Canvas.Left="1.5" Canvas.Top="3.8" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="1,1,0,0" />
                     </Canvas>
                 </Button>
+                <Button Template="{DynamicResource ButtonWMP}" Margin="88.666,8.5,72.834,8" Width="23" Height="23" Click="TogglePlayListGrid">
+					<Canvas Height="20" Width="20">
+						<Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="2" Width="4"/>
+						<Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="2" Width="11"/>
+						<Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="8" Width="4"/>
+						<Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="8" Width="11"/>
+						<Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="14" Width="4"/>
+						<Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="14" Width="11"/>
+					</Canvas>
+				</Button>
                 <Button Command="{Binding StopFile}"  Template="{DynamicResource ButtonWMP}" x:Name="Stop" VerticalAlignment="Center" Height="23" Margin="0,0,0,0" Width="19" HorizontalAlignment="Left">
                     <StackPanel Height="9.353" Width="9.353" Orientation="Horizontal">
                         <Rectangle Height="9.353" Width="9.353" Fill="#FFFBFBFB" />
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding FindRessource}"  Template="{DynamicResource ButtonWMP}" x:Name="Parcourir" HorizontalAlignment="Right
-				" Margin="0" VerticalAlignment="Center" Content="Parcourir..." BorderThickness="4,1,1,1" Cursor="Hand" Foreground="#FFFBFBFB" Height="23" Width="63.801">
+                <Button Command="{Binding FindRessource}"  Template="{DynamicResource ButtonWMP}" x:Name="Parcourir" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Content="Parcourir..." BorderThickness="4,1,1,1" Cursor="Hand" Foreground="#FFFBFBFB" Height="23" Width="63.801">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                             <GradientStop Color="#FFF3F3F3" Offset="0"/>

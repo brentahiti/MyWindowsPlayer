@@ -193,9 +193,13 @@ namespace WindowsMediaPlayer
         {
             if (!this.Topmost)
             {
+                this.BorderFullScreen1.BorderThickness = new System.Windows.Thickness(1, 1, 0, 0);
+                this.BorderFullScreen2.BorderThickness = new System.Windows.Thickness(0, 1, 1, 0);
+                this.BorderFullScreen3.BorderThickness = new System.Windows.Thickness(1, 0, 0, 1);
+                this.BorderFullScreen4.BorderThickness = new System.Windows.Thickness(0, 0, 1, 1);
+
                 this.Topmost = true;
                 this.WindowState = WindowState.Maximized;
-                this.full.Content = "-";
                 this.MainContent.Background = Brushes.Black;
 
                 var row = this.MainLayoutGrid.ColumnDefinitions;
@@ -216,8 +220,12 @@ namespace WindowsMediaPlayer
             }
             else
             {
+                this.BorderFullScreen1.BorderThickness = new System.Windows.Thickness(0, 0, 1, 1);
+                this.BorderFullScreen2.BorderThickness = new System.Windows.Thickness(1, 0, 0, 1);
+                this.BorderFullScreen3.BorderThickness = new System.Windows.Thickness(0, 1, 1, 0);
+                this.BorderFullScreen4.BorderThickness = new System.Windows.Thickness(1, 1, 0, 0);
+
                 this.WindowState = WindowState.Normal;
-                this.full.Content = "+";
                 this.Topmost = false;
                 this.MainContent.Background = this.BgNormal;
 

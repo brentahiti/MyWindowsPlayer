@@ -204,39 +204,55 @@
                 <Button Name="btnClose" Grid.Column="2" Click="btnClose_Click" Template="{DynamicResource ButtonWMP}" Foreground="White" Margin="0,0,0,1">Close</Button>
             </Grid>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="2" Background="DarkGray" x:Name="MainContent">
+        <Grid Grid.Column="1" Grid.Row="2" Background="DarkGray" x:Name="MainContent" Margin="0,-4,0,4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="270*" />
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Viewbox>
-                    <Grid>
-                        <ContentControl Content="{Binding MyMediaPlayer}" />
-                        <!--<MediaElement x:Name="mediaElement" VerticalAlignment="Center" Height="auto" Width="auto"
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="226" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Viewbox Grid.Column="1">
+                        <Grid>
+                            <ContentControl Content="{Binding MyMediaPlayer}" />
+                            <!--<MediaElement x:Name="mediaElement" VerticalAlignment="Center" Height="auto" Width="auto"
                         Source="{Binding mediaElement.Source}"
                         LoadedBehavior="{Binding mediaElement.LoadedBehavior}"
                         Drop="mediaElement_Drop"
                         Volume="{Binding mediaElement.Volume}" />-->
+                        </Grid>
+                    </Viewbox>
+                    <Grid Grid.Column="0">
+                        <Button Command="{Binding AddElementInPlaylist}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add" Foreground="White" Margin="0,3,0,0"/>
+                        <Button Command="{Binding LoadPlayList}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Load" Foreground="White" Margin="0,3,0,0"/>
+                        <Button Command="{Binding SavePlayList}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Save" Foreground="White" Margin="0,3,0,0"/>
+                        <ListBox Grid.Column="0" Margin="0,25,0,0" Background="Transparent">
+                            <ListBoxItem Content="42:42 - Toto.avi" />
+                            <ListBoxItem Content="42:42 - Toto.avi" />
+                            <ListBoxItem Content="42:42 - Toto.avi" />
+                            <ListBoxItem Content="42:42 - Toto.avi" />
+                            <ListBoxItem Content="42:42 - Toto.avi" />
+                        </ListBox>
                     </Grid>
-                </Viewbox>
+                </Grid>
             </Grid>
             <Grid Grid.Row="1" Margin="8,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="139" />
+                    <ColumnDefinition Width="167.333" />
                     <ColumnDefinition />
                     <ColumnDefinition Width="62.829" />
                 </Grid.ColumnDefinitions>
 
 
                 <Grid Grid.Column="1">
-                    <Button Command="{Binding AddElementInPlaylist}" Height="30" Width="50" Margin="179,6,448,4" >Add</Button>
-                    <Button Command="{Binding LoadPlayList}" Height="30" Width="50" Margin="108,6,519,4">Load</Button>
-                    <Button Command="{Binding SavePlayList}" Height="30" Width="50" Margin="41,6,586,4">Save</Button>
                 </Grid>
 
 
-                <Button Template="{DynamicResource ButtonWMP}" Command="{Binding PlayFile}" Height="23" Width="20" x:Name="LectureButton" HorizontalAlignment="Right" Margin="0,0,93.801,0" VerticalAlignment="Center">
+                <Button Template="{DynamicResource ButtonWMP}" Command="{Binding PlayFile}" Height="23" Width="20" x:Name="LectureButton" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center">
                     <Canvas Height="9.353" Width="8.68">
                         <Path Visibility="{Binding VisiblePlay}" Height="9.353" Width="8.68" Fill="#FFFBFBFB" Stretch="Fill" Data="M15.639187,16.184645 L15.627616,24.492212 L23.324333,20.374496 z"/>
                         <StackPanel Visibility="{Binding VisiblePause}" Height="9.353" Width="8.68" Orientation="Horizontal">
@@ -246,7 +262,14 @@
                     </Canvas>
                 </Button>
 
-                <Button  Template="{DynamicResource ButtonWMP}" x:Name="full" VerticalAlignment="Center" Height="23" Margin="51,0,0,0" Width="19" HorizontalAlignment="Left" Click="full_Click" Content="+" Foreground="White"/>
+                <Button  Template="{DynamicResource ButtonWMP}" x:Name="full" VerticalAlignment="Center" Height="23" Margin="53.668,0,0,0" Click="full_Click" Foreground="White" HorizontalAlignment="Left" Width="23">
+                    <Canvas Height="20" Width="20">
+                        <Border Height="4.5" x:Name="BorderFullScreen1" Canvas.Left="12.75" Canvas.Top="11.75" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="0,0,1,1" />
+                        <Border Height="4.5" x:Name="BorderFullScreen2" Canvas.Left="1.5" Canvas.Top="11.75" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="1,0,0,1" />
+                        <Border Height="4.5" x:Name="BorderFullScreen3" Canvas.Left="12.75" Canvas.Top="3.8" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="0,1,1,0" />
+                        <Border Height="4.5" x:Name="BorderFullScreen4" Canvas.Left="1.5" Canvas.Top="3.8" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="1,1,0,0" />
+                    </Canvas>
+                </Button>
                 <Button Command="{Binding StopFile}"  Template="{DynamicResource ButtonWMP}" x:Name="Stop" VerticalAlignment="Center" Height="23" Margin="0,0,0,0" Width="19" HorizontalAlignment="Left">
                     <StackPanel Height="9.353" Width="9.353" Orientation="Horizontal">
                         <Rectangle Height="9.353" Width="9.353" Fill="#FFFBFBFB" />

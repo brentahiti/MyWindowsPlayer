@@ -9,6 +9,7 @@
         WindowState="Normal"
         WindowStyle="None"
         AllowsTransparency="True"
+        AllowDrop="True"
         PreviewMouseMove="ResetCursor"
     WindowStartupLocation="CenterScreen"
     xmlns:wm="clr-namespace:WindowsMediaPlayer"

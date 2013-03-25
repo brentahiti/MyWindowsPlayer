@@ -36,6 +36,7 @@ namespace WindowsMediaPlayer
         public event EventHandler<FileEventArg> FileEvent;
         public event EventHandler FileLoaded;
         public event EventHandler FileEnded;
+        public event EventHandler TimeElapsed;
 
         public MediaHandler(RessourceManager rm)
         {
@@ -143,6 +144,10 @@ namespace WindowsMediaPlayer
             if (this.ProgressBar.Maximum > 0)
             {
                 this.ProgressBar.Value = this.MediaPlayer.Position.TotalSeconds;
+                if (this.TimeElapsed != null)
+                {
+                    this.TimeElapsed(this, new EventArgs());
+                }
             }
         }
 

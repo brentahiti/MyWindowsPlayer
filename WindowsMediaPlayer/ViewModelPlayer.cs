@@ -65,6 +65,16 @@ namespace WindowsMediaPlayer
                 NotifyPropertyChanged("ProgressBarMaxSpan");
             }
         }
+        private TimeSpan currentTimeSpan;
+        public TimeSpan CurrentTimeSpan
+        {
+            get { return this.currentTimeSpan; }
+            set
+            {
+                this.currentTimeSpan = value;
+                NotifyPropertyChanged("CurrentTimeSpan");
+            }
+        }
         public MediaElement MyMediaPlayer
         {
             get { return this.mediaHandler.MediaPlayer; }
@@ -100,6 +110,7 @@ namespace WindowsMediaPlayer
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
             this.mediaHandler.FileLoaded += new EventHandler(OnFileLoaded);
             this.mediaHandler.FileEnded += new EventHandler(OnFileEnded);
+            this.mediaHandler.TimeElapsed += new EventHandler(OnTimeElapsed);
 
             this.ValueSoundContent = 50.0;
             this.VisiblePlay = "Visible";
@@ -133,6 +144,11 @@ namespace WindowsMediaPlayer
                 this.mediaHandler.PlayState = ePlayState.Stop;
                 this.mediaHandler.PlayFile();
             }
+        }
+
+        private void OnTimeElapsed(object sender, EventArgs e)
+        {
+            this.CurrentTimeSpan = TimeSpan.FromSeconds(this.ProgressBar.Value);
         }
     }
 }

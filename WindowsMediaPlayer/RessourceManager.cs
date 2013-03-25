@@ -12,19 +12,19 @@ namespace WindowsMediaPlayer
         public bool FileFound { get; private set; }
         public string FilePath { get; private set; }
 
-        public int currentElementInPlaylist { get; set; }
-        public int numberElementInPlaylist { get; set; }
-        public Playlist playlist { get; private set; }
-        public bool playlistFound { get; private set; }
+        public int CurrentElementInPlaylist { get; set; }
+        public int NumberElementInPlaylist { get; set; }
+        public Playlist Playlist { get; private set; }
+        public bool PlaylistFound { get; private set; }
 
         public RessourceManager()
         {
             this.FileFound = false;
             this.FilePath = null;
-            this.playlist = new Playlist();
-            this.playlistFound = false;
-            this.numberElementInPlaylist = 0;
-            this.currentElementInPlaylist = 0;
+            this.Playlist = new Playlist();
+            this.PlaylistFound = false;
+            this.NumberElementInPlaylist = 0;
+            this.CurrentElementInPlaylist = 0;
         }
 
         public void AddElementInPlaylist()
@@ -39,10 +39,10 @@ namespace WindowsMediaPlayer
             if (result == true)
             {
                 PlayListElement tmpElement = new PlayListElement();
-                tmpElement.Path = windowsDial.FileName;
-                this.playlist.playList.Add(tmpElement);
-                this.numberElementInPlaylist = this.playlist.playList.Count();
-                playlistFound = true;
+                tmpElement.Pathname = windowsDial.FileName;
+                this.Playlist.Elements.Add(tmpElement);
+                this.NumberElementInPlaylist = this.Playlist.Elements.Count();
+                PlaylistFound = true;
                 this.FileFound = true;
             }
         }
@@ -56,7 +56,7 @@ namespace WindowsMediaPlayer
             Nullable<bool> result = windowsDial.ShowDialog();
             if (result == true)
             {
-                this.playlist.saveList(windowsDial.FileName);
+                this.Playlist.saveList(windowsDial.FileName);
             }
         }
 
@@ -69,10 +69,10 @@ namespace WindowsMediaPlayer
             Nullable<bool> result = windowsDial.ShowDialog();
             if (result == true)
             {
-                this.playlist = this.playlist.loadList(windowsDial.FileName);
-                this.numberElementInPlaylist = this.playlist.playList.Count();
-                this.currentElementInPlaylist = 0;
-                playlistFound = true;
+                this.Playlist = this.Playlist.loadList(windowsDial.FileName);
+                this.NumberElementInPlaylist = this.Playlist.Elements.Count();
+                this.CurrentElementInPlaylist = 0;
+                PlaylistFound = true;
                 this.FileFound = true;
             }
         }
@@ -88,10 +88,10 @@ namespace WindowsMediaPlayer
             if (result == true)
             {
                 this.FileFound = true;
-                this.currentElementInPlaylist = 0;
-                this.playlistFound = false;
-                this.numberElementInPlaylist = 0;
-                this.playlist.playList.Clear();
+                this.CurrentElementInPlaylist = 0;
+                this.PlaylistFound = false;
+                this.NumberElementInPlaylist = 0;
+                this.Playlist.Elements.Clear();
                 this.FilePath = windowsDial.FileName;
             }
             else

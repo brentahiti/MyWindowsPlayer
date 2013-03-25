@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace WindowsMediaPlayer
 {
@@ -83,6 +84,10 @@ namespace WindowsMediaPlayer
         {
             get { return this.mediaHandler.ProgressBar; }
         }
+        public ObservableCollection<PlayListElement> Playlist
+        {
+            get { return this.ressourceManager.Playlist.Elements; }
+        }
 
 
         private RessourceManager ressourceManager;
@@ -139,7 +144,7 @@ namespace WindowsMediaPlayer
 
         private void OnFileEnded(object sender, EventArgs e)
         {
-            if (this.ressourceManager.playlistFound == true)
+            if (this.ressourceManager.PlaylistFound == true)
             {
                 this.mediaHandler.PlayState = ePlayState.Stop;
                 this.mediaHandler.PlayFile();

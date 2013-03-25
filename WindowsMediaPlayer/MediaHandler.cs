@@ -74,11 +74,11 @@ namespace WindowsMediaPlayer
 
                     if (this.PlayState == ePlayState.Stop)
                     {
-                        if (this.RessourceManager.playlistFound
-                            && (this.RessourceManager.currentElementInPlaylist < this.RessourceManager.numberElementInPlaylist))
+                        if (this.RessourceManager.PlaylistFound
+                            && (this.RessourceManager.CurrentElementInPlaylist < this.RessourceManager.NumberElementInPlaylist))
                         {
-                            this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.playlist.playList[this.RessourceManager.currentElementInPlaylist].Path, UriKind.Relative));
-                            ++(this.RessourceManager.currentElementInPlaylist);
+                            this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Playlist.Elements[this.RessourceManager.CurrentElementInPlaylist].Pathname, UriKind.Relative));
+                            ++(this.RessourceManager.CurrentElementInPlaylist);
                         }
                         else
                             this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.FilePath, UriKind.Relative));
@@ -95,7 +95,7 @@ namespace WindowsMediaPlayer
             {
                 this.MediaPlayer.Stop();
                 this.PlayState = ePlayState.Stop;
-                this.RessourceManager.currentElementInPlaylist = 0;
+                this.RessourceManager.CurrentElementInPlaylist = 0;
             }
         }
 

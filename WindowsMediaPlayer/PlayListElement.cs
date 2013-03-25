@@ -3,18 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using System.IO;
 
 
 namespace WindowsMediaPlayer
 {
     public class PlayListElement
     {
-        public string path;
-        public string Path
+        private string path;
+        public string Pathname
         {
-            get { return path; }
-            set { path = value; }
+            get { return this.path; }
+            set
+            {
+                this.path = value;
+                this.Filename = Path.GetFileName(this.path);
+            }
         }
+
+        public string Filename { get; private set; }
+
         public PlayListElement()
         {
         }

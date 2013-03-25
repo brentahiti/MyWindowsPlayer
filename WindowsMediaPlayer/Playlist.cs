@@ -4,17 +4,13 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Serialization;
+using System.Collections.ObjectModel;
 
 namespace WindowsMediaPlayer
 {
     public class Playlist
     {
-        public List<PlayListElement> playList;
-        public List<PlayListElement> PlayList
-        {
-            get { return playList; }
-            set { playList = value; }
-        }
+        public ObservableCollection<PlayListElement> Elements { get; private set; }
 
         public void saveList(string name)
         {
@@ -35,7 +31,7 @@ namespace WindowsMediaPlayer
 
         public Playlist()
         {
-            playList = new List<PlayListElement>();
+            this.Elements = new ObservableCollection<PlayListElement>();
         }
     }
 }

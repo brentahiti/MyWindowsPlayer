@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Library.cs" />
     <Compile Include="MediaHandler.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="PlayListElement.cs" />

@@ -93,6 +93,7 @@ namespace WindowsMediaPlayer
         private RessourceManager ressourceManager;
         private MediaHandler mediaHandler;
 
+        public ICommand AddToLibrary { get; private set; }
         public ICommand FindRessource { get; private set; }
         public ICommand PlayFile { get; private set; }
         public ICommand StopFile { get; private set; }
@@ -105,6 +106,7 @@ namespace WindowsMediaPlayer
             this.ressourceManager = new RessourceManager();
             this.mediaHandler = new MediaHandler(this.ressourceManager);
 
+            this.AddToLibrary = new RelayCommand(this.ressourceManager.AddToLibrary);
             this.FindRessource = new RelayCommand(this.ressourceManager.FindRessource);
             this.PlayFile = new RelayCommand(this.mediaHandler.PlayFile);
             this.StopFile = new RelayCommand(this.mediaHandler.StopFile);

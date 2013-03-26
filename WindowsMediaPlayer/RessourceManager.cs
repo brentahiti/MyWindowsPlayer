@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Microsoft.Win32;
+using System.IO;
 
 namespace WindowsMediaPlayer
 {
@@ -16,15 +17,43 @@ namespace WindowsMediaPlayer
         public int NumberElementInPlaylist { get; set; }
         public Playlist Playlist { get; private set; }
         public bool PlaylistFound { get; private set; }
+        public Library Library { get; private set; }
 
         public RessourceManager()
         {
             this.FileFound = false;
             this.FilePath = null;
             this.Playlist = new Playlist();
+            this.Library = new Library();
             this.PlaylistFound = false;
             this.NumberElementInPlaylist = 0;
             this.CurrentElementInPlaylist = 0;
+        }
+
+        public void AddToLibrary()
+        {
+            OpenFileDialog windowsDial = new OpenFileDialog();
+
+            windowsDial.FileName = "File";
+            windowsDial.DefaultExt = ".avi";
+            windowsDial.Filter = "Music file (.mp3)|*.mp3|" + "Video File (.avi, .wmv)|*.avi;*.wmv|" + "Picture File (*.bmp, *.jpg, *.jpeg, *.png)|*.bmp;*.jpg;*.jpeg;*.png";
+
+            Nullable<bool> result = windowsDial.ShowDialog();
+            if (result == true)
+            {
+                PlayListElement tmpElement = new PlayListElement();
+                tmpElement.Pathname = windowsDial.FileName;
+                string ext = Path.GetExtension(tmpElement.Pathname);
+                if (ext == ".mp3")
+                    this.Library.music.Add(tmpElement);
+                else if (ext == ".avi" || ext == ".wmv")
+                    this.Library.video.Add(tmpElement);
+                else if (ext == ".bmp" || ext == ".jpg" || ext == ".jpeg" || ext == ".png")
+                    this.Library.picture.Add(tmpElement);
+                {
+                    this.Library.save("C:\\Users\\" + Environment.UserName + "\\Documents\\LibraryMediaPLayer.xml");
+                }
+            }
         }
 
         public void AddElementInPlaylist()

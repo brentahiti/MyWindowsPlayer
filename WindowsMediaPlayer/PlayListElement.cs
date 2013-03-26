@@ -21,7 +21,7 @@ namespace WindowsMediaPlayer
             }
         }
 
-        public string Filename { get; private set; }
+        public string Filename { get; set; }
 
         public PlayListElement()
         {

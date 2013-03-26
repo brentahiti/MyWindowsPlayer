@@ -10,7 +10,7 @@ namespace WindowsMediaPlayer
 {
     public class Playlist
     {
-        public ObservableCollection<PlayListElement> Elements { get; private set; }
+        public ObservableCollection<PlayListElement> Elements { get; set; }
 
         public void saveList(string name)
         {

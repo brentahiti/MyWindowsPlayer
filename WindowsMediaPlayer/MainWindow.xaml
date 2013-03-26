@@ -243,6 +243,12 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="62.829" />
                 </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1">
+                    <Button Command="{Binding AddToLibrary}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Content="AddinLib" Foreground="White" Margin="6,10,0,12" Height="18"/>
+                </Grid>
+                
+                
                 <Button Template="{DynamicResource ButtonWMP}" Command="{Binding PlayFile}" Height="23" Width="20" x:Name="LectureButton" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center">
                     <Canvas Height="9.353" Width="8.68">
                         <Path Visibility="{Binding VisiblePlay}" Height="9.353" Width="8.68" Fill="#FFFBFBFB" Stretch="Fill" Data="M15.639187,16.184645 L15.627616,24.492212 L23.324333,20.374496 z"/>

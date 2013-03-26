@@ -17,7 +17,7 @@ namespace WindowsMediaPlayer
         public int NumberElementInPlaylist { get; set; }
         public Playlist Playlist { get; private set; }
         public bool PlaylistFound { get; private set; }
-        public Library Library { get; private set; }
+        public Library Library { get; set; }
 
         public RessourceManager()
         {
@@ -25,6 +25,7 @@ namespace WindowsMediaPlayer
             this.FilePath = null;
             this.Playlist = new Playlist();
             this.Library = new Library();
+            this.Library = this.Library.load("C:\\Users\\" + Environment.UserName + "\\Documents\\LibraryMediaPLayer.xml");
             this.PlaylistFound = false;
             this.NumberElementInPlaylist = 0;
             this.CurrentElementInPlaylist = 0;

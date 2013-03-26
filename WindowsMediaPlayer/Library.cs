@@ -38,6 +38,23 @@ namespace WindowsMediaPlayer
             this.picture = new ObservableCollection<PlayListElement>();
         }
 
+        public Library load(string name)
+        {
+            try
+            {
+                FileStream file = File.Open(name, FileMode.Open);
+                XmlSerializer serializer = new XmlSerializer(typeof(Library));
+                Library newList = (Library)serializer.Deserialize(file);
+                file.Close();
+                return newList;
+            }
+            catch (FileNotFoundException e)
+            {
+                return this;
+            }
+        }
+
+
         public void save(string name)
         {
             FileStream file = File.Open(name, FileMode.OpenOrCreate);

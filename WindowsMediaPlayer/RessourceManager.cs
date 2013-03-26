@@ -17,7 +17,7 @@ namespace WindowsMediaPlayer
         public int NumberElementInPlaylist { get; set; }
         public Playlist Playlist { get; private set; }
         public bool PlaylistFound { get; private set; }
-        public Library Library { get; set; }
+        public Library Library { get; private set; }
 
         public RessourceManager()
         {

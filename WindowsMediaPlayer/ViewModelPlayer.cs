@@ -76,6 +76,17 @@ namespace WindowsMediaPlayer
                 NotifyPropertyChanged("CurrentTimeSpan");
             }
         }
+        private PlayListElement selectedItem;
+        public PlayListElement SelectedItem
+        {
+            get { return this.selectedItem; }
+            set
+            {
+                this.selectedItem = value;
+                this.ressourceManager.SelectedItem = value;
+                NotifyPropertyChanged("SelectedItem");
+            }
+        }
         public MediaElement MyMediaPlayer
         {
             get { return this.mediaHandler.MediaPlayer; }
@@ -102,6 +113,7 @@ namespace WindowsMediaPlayer
         public ICommand SavePlayList { get; private set; }
         public ICommand LoadPlayList { get; private set; }
         public ICommand AddElementInPlaylist { get; private set; }
+        public ICommand PlaySelectedItem { get; private set; }
         
         public ViewModelPlayer()
         {
@@ -117,6 +129,7 @@ namespace WindowsMediaPlayer
             this.AddElementInPlaylist = new RelayCommand(this.ressourceManager.AddElementInPlaylist);
             this.NextFile = new RelayCommand(this.mediaHandler.NextFile);
             this.PreviousFile = new RelayCommand(this.mediaHandler.PreviousFile);
+            this.PlaySelectedItem = new RelayCommand(this.mediaHandler.PlaySelectedFile);
 
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
             this.mediaHandler.FileLoaded += new EventHandler(OnFileLoaded);
@@ -152,7 +165,6 @@ namespace WindowsMediaPlayer
         {
             if (this.ressourceManager.PlaylistFound == true)
             {
-                this.mediaHandler.PlayState = ePlayState.Stop;
                 this.mediaHandler.PlayFile();
             }
         }

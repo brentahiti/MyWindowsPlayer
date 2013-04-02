@@ -125,6 +125,13 @@ namespace WindowsMediaPlayer
             }
         }
 
+        public void PlaySelectedFile()
+        {
+            this.RessourceManager.CurrentElementInPlaylist = this.RessourceManager.Playlist.Elements.IndexOf(this.RessourceManager.SelectedItem);
+            this.PlayState = ePlayState.Stop;
+            PlayFile();
+        }
+
         private static Thumb GetThumb(Slider slider)
         {
             //slider.Measure(new Size(200, 200));
@@ -159,6 +166,7 @@ namespace WindowsMediaPlayer
 
         private void OnMediaEnd(object sender, RoutedEventArgs e)
         {
+            this.PlayState = ePlayState.Stop;
             if (this.FileEnded != null)
             {
                 this.FileEnded(this, new EventArgs());

@@ -23,6 +23,24 @@ namespace WindowsMediaPlayer
 
         public string Filename { get; set; }
 
+        //public override bool Equals(object o)
+        //{
+        //    if (o == null)
+        //        return false;
+
+        //    return ((PlayListElement)o).Pathname == this.Pathname;
+        //}
+
+        public override int GetHashCode()
+        {
+            return this.Pathname.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return this.Filename;
+        }
+
         public PlayListElement()
         {
         }

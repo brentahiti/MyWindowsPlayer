@@ -13,6 +13,7 @@ namespace WindowsMediaPlayer
         public bool FileFound { get; private set; }
         public string FilePath { get; private set; }
 
+        public PlayListElement SelectedItem { get; set; }
         public int CurrentElementInPlaylist { get; set; }
         public int NumberElementInPlaylist { get; set; }
         public Playlist Playlist { get; private set; }

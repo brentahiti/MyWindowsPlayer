@@ -227,12 +227,15 @@
                         <Button Command="{Binding AddElementInPlaylist}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add" Foreground="White" Margin="0,3,0,0" Height="18"/>
                         <Button Command="{Binding LoadPlayList}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Load" Foreground="White" Margin="60,3,0,0" Height="18"/>
                         <Button Command="{Binding SavePlayList}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Save" Foreground="White" Margin="120,3,0,0" Height="18"/>
-                        <ListBox Grid.Column="0" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding Playlist}">
-                            <ListBox.ItemTemplate>
+                        <ListBox Grid.Column="0" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding Playlist}" wm:ControlItemDoubleClick.ItemsDoubleClick="true" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}">
+                            <!--<ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Filename}"/>
                                 </DataTemplate>
-                            </ListBox.ItemTemplate>
+                            </ListBox.ItemTemplate>-->
+                            <ListBox.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PlaySelectedItem}" CommandParameter="{Binding}" />
+                            </ListBox.InputBindings>
                         </ListBox>
                     </Grid>
                 </Grid>

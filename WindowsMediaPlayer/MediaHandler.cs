@@ -60,6 +60,32 @@ namespace WindowsMediaPlayer
             this.RessourceManager = rm;
         }
 
+        public void NextFile()
+        {
+            if (this.RessourceManager.PlaylistFound && this.RessourceManager.CurrentElementInPlaylist < this.RessourceManager.NumberElementInPlaylist)
+            {
+                if (this.FileEnded != null)
+                {
+                    this.FileEnded(this, new EventArgs());
+                }
+            }
+        }
+
+        public void PreviousFile()
+        {
+            if (this.RessourceManager.PlaylistFound)
+            {
+                if (this.RessourceManager.CurrentElementInPlaylist > 1)
+                {
+                    (this.RessourceManager.CurrentElementInPlaylist) -= 2;
+                    if (this.FileEnded != null)
+                    {
+                        this.FileEnded(this, new EventArgs());
+                    }
+                }
+            }
+        }
+
         public void PlayFile()
         {
             if (this.RessourceManager.FileFound)

@@ -246,6 +246,9 @@
 
                 <Grid Grid.Column="1">
                     <Button Command="{Binding AddToLibrary}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Content="AddinLib" Foreground="White" Margin="6,10,0,12" Height="18"/>
+                    <Button Command="{Binding PreviousFile}" Template="{DynamicResource ButtonWMP}" Width="58" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Precedent" Foreground="White" Margin="71,9,0,13" Height="18"/>
+                    <Button Command="{Binding NextFile}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Suivant" Foreground="White" Margin="224,10,0,12" Height="18"/>
+
                 </Grid>
                 
                 

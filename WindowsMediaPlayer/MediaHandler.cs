@@ -119,6 +119,7 @@ namespace WindowsMediaPlayer
                             }
                             else
                             {
+                                tmp = this.RessourceManager.Library.Music.IndexOf(this.RessourceManager.SelectedItem);
                                 this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Music[tmp].Pathname, UriKind.Relative));;
                             }
                         }

@@ -47,11 +47,11 @@ namespace WindowsMediaPlayer
                 tmpElement.Pathname = windowsDial.FileName;
                 string ext = Path.GetExtension(tmpElement.Pathname);
                 if (ext == ".mp3")
-                    this.Library.music.Add(tmpElement);
+                    this.Library.Music.Add(tmpElement);
                 else if (ext == ".avi" || ext == ".wmv")
-                    this.Library.video.Add(tmpElement);
+                    this.Library.Video.Add(tmpElement);
                 else if (ext == ".bmp" || ext == ".jpg" || ext == ".jpeg" || ext == ".png")
-                    this.Library.picture.Add(tmpElement);
+                    this.Library.Picture.Add(tmpElement);
                 {
                     this.Library.save("C:\\Users\\" + Environment.UserName + "\\Documents\\LibraryMediaPLayer.xml");
                 }

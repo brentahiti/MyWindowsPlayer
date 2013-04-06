@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="WindowsMediaPlayer.MainWindow"
-        Title="MainWindow" Height="400" Width="925"
+        Title="MainWindow" Height="400" Width="985"
         Loaded="Window_Loaded"
         Background="Transparent" Foreground="{x:Null}" AllowsTransparency="True"
         WindowState="Normal" WindowStyle="None"
@@ -11,6 +11,8 @@
         WindowStartupLocation="CenterScreen"
         xmlns:wm="clr-namespace:WindowsMediaPlayer"
         Icon="logo.gif"
+        MinHeight="400"
+        MinWidth="985"
     >
     <!--
     -->
@@ -209,7 +211,8 @@
             <Grid Grid.Row="0">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="226" />
+                        <ColumnDefinition Width="225" />
+                        <ColumnDefinition Width="500" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
@@ -238,24 +241,72 @@
                             </ListBox.InputBindings>
                         </ListBox>
                     </Grid>
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Content="Music" Height="28" HorizontalAlignment="Left" Name="MusicLabelLibrary" VerticalAlignment="Top" />
+                        <ListBox Grid.Row="0" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding MusicLibrary}" wm:ControlItemDoubleClick.ItemsDoubleClick="true" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}">
+                            <ListBox.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PlaySelectedItemMusicLibrary}" CommandParameter="{Binding}" />
+                            </ListBox.InputBindings>
+                        </ListBox>
+                        <Label Grid.Row="1" Content="Videos" Height="28" HorizontalAlignment="Left" Name="VideoLabelLibrary" VerticalAlignment="Top" />
+                        <ListBox Grid.Row="1" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding VideoLibrary}" wm:ControlItemDoubleClick.ItemsDoubleClick="true" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}">
+                            <ListBox.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PlaySelectedItemVideoLibrary}" CommandParameter="{Binding}" />
+                            </ListBox.InputBindings>
+                        </ListBox>
+                        <Label Grid.Row="2" Content="Images" Height="28" HorizontalAlignment="Left" Name="ImageLabelLibrary" VerticalAlignment="Top" />
+                        <ListBox Grid.Row="2" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding ImageLibrary}" wm:ControlItemDoubleClick.ItemsDoubleClick="true" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}">
+                            <ListBox.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PlaySelectedItemImageLibrary}" CommandParameter="{Binding}" />
+                            </ListBox.InputBindings>
+                        </ListBox>
+                    </Grid>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1" Margin="8,0">
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="186" />
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="62.829" />
+                    <ColumnDefinition Width="192" />
+                    <ColumnDefinition Width="688*" />
+                    <ColumnDefinition Width="75" />
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="1">
+                <Grid Grid.ColumnSpan="2" Margin="192,0,0,0">
                     <Button Command="{Binding AddToLibrary}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Content="AddinLib" Foreground="White" Margin="6,10,0,12" Height="18"/>
-                    <Button Command="{Binding PreviousFile}" Template="{DynamicResource ButtonWMP}" Width="58" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Precedent" Foreground="White" Margin="71,9,0,13" Height="18"/>
-                    <Button Command="{Binding NextFile}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Suivant" Foreground="White" Margin="224,10,0,12" Height="18"/>
-
+                    <Button Command="{Binding PreviousFile}" Template="{DynamicResource ButtonWMP}" Width="58" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Precedent" Foreground="White" Margin="62,10,0,12" Height="18"/>
+                    <Button Command="{Binding NextFile}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Suivant" Foreground="White" Margin="126,10,0,12" Height="18"/>
+                    <ContentControl Margin="275,8,192,10" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="100" Width="163" Content="{Binding ProgressBar}" />
+                    <TextBox Height="22" HorizontalAlignment="Right" Margin="0,8,90,10" Name="textBox1" VerticalAlignment="Center" Width="103">
+                        <TextBox.Text>
+                            <MultiBinding StringFormat="{}{0:hh':'mm':'ss}/{1:hh':'mm':'ss}">
+                                <Binding Path="CurrentTimeSpan" />
+                                <Binding Path="ProgressBarMaxSpan" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <Button Template="{DynamicResource ButtonWMP}" Margin="598,8,0,9" Width="23" Height="23" Click="TogglePlayListGrid">
+                        <Canvas Height="20" Width="20">
+                            <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="2" Width="4" />
+                            <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="2" Width="11" />
+                            <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="8" Width="4" />
+                            <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="8" Width="11" />
+                            <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="14" Width="4" />
+                            <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="14" Width="11" />
+                        </Canvas>
+                    </Button>
+                </Grid>
+                
+                <Grid Grid.Column="2">
+                    <Slider x:Name="Volume" Value="{Binding ValueSoundContent}" SmallChange="1" Maximum="100" Margin="0,0,47,0" Orientation="Vertical" HorizontalAlignment="Right" />
+                    <TextBox VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="txtValue" Text="{Binding Value, ElementName=Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="22" Width="30" Margin="0,9,6,9" />
                 </Grid>
                 
                 
-                <Button Template="{DynamicResource ButtonWMP}" Command="{Binding PlayFile}" Height="23" Width="20" x:Name="LectureButton" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center">
+                <Button Template="{DynamicResource ButtonWMP}" Command="{Binding PlayFile}" Height="23" Width="20" x:Name="LectureButton" HorizontalAlignment="Left" Margin="31,8,0,8" VerticalAlignment="Center">
                     <Canvas Height="9.353" Width="8.68">
                         <Path Visibility="{Binding VisiblePlay}" Height="9.353" Width="8.68" Fill="#FFFBFBFB" Stretch="Fill" Data="M15.639187,16.184645 L15.627616,24.492212 L23.324333,20.374496 z"/>
                         <StackPanel Visibility="{Binding VisiblePause}" Height="9.353" Width="8.68" Orientation="Horizontal">
@@ -264,7 +315,7 @@
                         </StackPanel>
                     </Canvas>
                 </Button>
-                <Button  Template="{DynamicResource ButtonWMP}" x:Name="full" VerticalAlignment="Center" Height="23" Margin="53.668,0,0,0" Click="full_Click" Foreground="White" HorizontalAlignment="Left" Width="23">
+                <Button  Template="{DynamicResource ButtonWMP}" x:Name="full" VerticalAlignment="Center" Height="23" Margin="58,0,0,0" Click="full_Click" Foreground="White" HorizontalAlignment="Left" Width="23">
                     <Canvas Height="20" Width="20">
                         <Border Height="4.5" x:Name="BorderFullScreen1" Canvas.Left="12.75" Canvas.Top="11.75" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="0,0,1,1" />
                         <Border Height="4.5" x:Name="BorderFullScreen2" Canvas.Left="1.5" Canvas.Top="11.75" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="1,0,0,1" />
@@ -272,7 +323,7 @@
                         <Border Height="4.5" x:Name="BorderFullScreen4" Canvas.Left="1.5" Canvas.Top="3.8" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="1,1,0,0" />
                     </Canvas>
                 </Button>
-                <Button Template="{DynamicResource ButtonWMP}" Margin="88.666,8.5,72.834,8" Width="23" Height="23" Click="TogglePlayListGrid">
+                <Button Template="{DynamicResource ButtonWMP}" Margin="89,8.5,80,8" Width="23" Height="23" Click="TogglePlayListGrid">
 					<Canvas Height="20" Width="20">
 						<Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="2" Width="4"/>
 						<Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="2" Width="11"/>
@@ -282,12 +333,12 @@
 						<Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="14" Width="11"/>
 					</Canvas>
 				</Button>
-                <Button Command="{Binding StopFile}"  Template="{DynamicResource ButtonWMP}" x:Name="Stop" VerticalAlignment="Center" Height="23" Margin="0,0,0,0" Width="19" HorizontalAlignment="Left">
+                <Button Command="{Binding StopFile}"  Template="{DynamicResource ButtonWMP}" x:Name="Stop" VerticalAlignment="Center" Height="23" Margin="5,8,0,8" Width="19" HorizontalAlignment="Left">
                     <StackPanel Height="9.353" Width="9.353" Orientation="Horizontal">
                         <Rectangle Height="9.353" Width="9.353" Fill="#FFFBFBFB" />
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding FindRessource}"  Template="{DynamicResource ButtonWMP}" x:Name="Parcourir" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Content="Parcourir..." BorderThickness="4,1,1,1" Cursor="Hand" Foreground="#FFFBFBFB" Height="23" Width="63.801">
+                <Button Command="{Binding FindRessource}"  Template="{DynamicResource ButtonWMP}" x:Name="Parcourir" HorizontalAlignment="Right" Margin="0,8,6,8" VerticalAlignment="Center" Content="Parcourir..." BorderThickness="4,1,1,1" Cursor="Hand" Foreground="#FFFBFBFB" Height="23" Width="63.801">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                             <GradientStop Color="#FFF3F3F3" Offset="0"/>
@@ -297,17 +348,6 @@
                         </LinearGradientBrush>
                     </Button.Background>
                 </Button>
-                <ContentControl Grid.Column="1" Margin="339,9,128,9" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="100" Width="163" Content="{Binding ProgressBar}" />
-                <TextBox Height="22" HorizontalAlignment="Right" Margin="0,8,4,10" Name="textBox1" VerticalAlignment="Center" Width="103" Grid.Column="1">
-                    <TextBox.Text>
-                        <MultiBinding StringFormat="{}{0:hh':'mm':'ss}/{1:hh':'mm':'ss}">
-                            <Binding Path="CurrentTimeSpan" />
-                            <Binding Path="ProgressBarMaxSpan" />
-                        </MultiBinding>
-                    </TextBox.Text>
-                </TextBox>
-                <Slider x:Name="Volume"  Value="{Binding ValueSoundContent}" SmallChange="1" Maximum="100" Margin="0,0,36,0" Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Right" />
-                <TextBox Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="txtValue" Text="{Binding Value, ElementName=Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="22" Width="30" Margin="0"/>
             </Grid>
         </Grid>
     </Grid>

@@ -125,9 +125,27 @@ namespace WindowsMediaPlayer
             }
         }
 
-        public void PlaySelectedFile()
+        public void PlaySelectedFileInPlaylist()
         {
             this.RessourceManager.CurrentElementInPlaylist = this.RessourceManager.Playlist.Elements.IndexOf(this.RessourceManager.SelectedItem);
+            this.PlayState = ePlayState.Stop;
+            PlayFile();
+        }
+
+        public void PlaySelectedFileMusicLibrary()
+        {
+            this.PlayState = ePlayState.Stop;
+            PlayFile();
+        }
+
+        public void PlaySelectedFileVideoLibrary()
+        {
+            this.PlayState = ePlayState.Stop;
+            PlayFile();
+        }
+
+        public void PlaySelectedFileImageLibrary()
+        {
             this.PlayState = ePlayState.Stop;
             PlayFile();
         }

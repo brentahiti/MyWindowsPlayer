@@ -99,6 +99,18 @@ namespace WindowsMediaPlayer
         {
             get { return this.ressourceManager.Playlist.Elements; }
         }
+        public ObservableCollection<PlayListElement> MusicLibrary
+        {
+            get { return this.ressourceManager.Library.Music; }
+        }
+        public ObservableCollection<PlayListElement> VideoLibrary
+        {
+            get { return this.ressourceManager.Library.Video; }
+        }
+        public ObservableCollection<PlayListElement> ImageLibrary
+        {
+            get { return this.ressourceManager.Library.Picture; }
+        }
 
 
         private RessourceManager ressourceManager;
@@ -114,6 +126,9 @@ namespace WindowsMediaPlayer
         public ICommand LoadPlayList { get; private set; }
         public ICommand AddElementInPlaylist { get; private set; }
         public ICommand PlaySelectedItem { get; private set; }
+        public ICommand PlaySelectedItemMusicLibrary { get; private set; }
+        public ICommand PlaySelectedItemVideoLibrary { get; private set; }
+        public ICommand PlaySelectedItemImageLibrary { get; private set; }
         
         public ViewModelPlayer()
         {
@@ -129,7 +144,10 @@ namespace WindowsMediaPlayer
             this.AddElementInPlaylist = new RelayCommand(this.ressourceManager.AddElementInPlaylist);
             this.NextFile = new RelayCommand(this.mediaHandler.NextFile);
             this.PreviousFile = new RelayCommand(this.mediaHandler.PreviousFile);
-            this.PlaySelectedItem = new RelayCommand(this.mediaHandler.PlaySelectedFile);
+            this.PlaySelectedItem = new RelayCommand(this.mediaHandler.PlaySelectedFileInPlaylist);
+            this.PlaySelectedItemMusicLibrary = new RelayCommand(this.mediaHandler.PlaySelectedFileMusicLibrary);
+            this.PlaySelectedItemVideoLibrary = new RelayCommand(this.mediaHandler.PlaySelectedFileVideoLibrary);
+            this.PlaySelectedItemImageLibrary = new RelayCommand(this.mediaHandler.PlaySelectedFileImageLibrary);
 
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
             this.mediaHandler.FileLoaded += new EventHandler(OnFileLoaded);

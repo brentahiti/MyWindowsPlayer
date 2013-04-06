@@ -10,15 +10,21 @@ namespace WindowsMediaPlayer
 {
     public class RessourceManager
     {
-        public bool FileFound { get; private set; }
+        public bool FileFound { get; set; }
         public string FilePath { get; private set; }
 
         public PlayListElement SelectedItem { get; set; }
+        public PlayListElement SelectedPicture { get; set; }
+        public PlayListElement SelectedMusic { get; set; }
+        public PlayListElement SelectedVideo { get; set; }
         public int CurrentElementInPlaylist { get; set; }
         public int NumberElementInPlaylist { get; set; }
         public Playlist Playlist { get; private set; }
         public bool PlaylistFound { get; private set; }
         public Library Library { get; private set; }
+
+
+        public bool isPlaylist = false;
 
         public RessourceManager()
         {
@@ -47,11 +53,11 @@ namespace WindowsMediaPlayer
                 tmpElement.Pathname = windowsDial.FileName;
                 string ext = Path.GetExtension(tmpElement.Pathname);
                 if (ext == ".mp3")
-                    this.Library.music.Add(tmpElement);
+                    this.Library.Music.Add(tmpElement);
                 else if (ext == ".avi" || ext == ".wmv")
-                    this.Library.video.Add(tmpElement);
+                    this.Library.Video.Add(tmpElement);
                 else if (ext == ".bmp" || ext == ".jpg" || ext == ".jpeg" || ext == ".png")
-                    this.Library.picture.Add(tmpElement);
+                    this.Library.Picture.Add(tmpElement);
                 {
                     this.Library.save("C:\\Users\\" + Environment.UserName + "\\Documents\\LibraryMediaPLayer.xml");
                 }

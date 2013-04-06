@@ -10,32 +10,15 @@ namespace WindowsMediaPlayer
 {
     public class Library
     {
-        public ObservableCollection<PlayListElement> music;
-        public ObservableCollection<PlayListElement> Music
-        {
-            get { return music; }
-            set { music = value; }
-        }
-
-        public ObservableCollection<PlayListElement> video;
-        public ObservableCollection<PlayListElement> Video
-        {
-            get { return video; }
-            set { video = value; }
-        }
-
-        public ObservableCollection<PlayListElement> picture;
-        public ObservableCollection<PlayListElement> Picture
-        {
-            get { return picture; }
-            set { picture = value; }
-        }
+        public ObservableCollection<PlayListElement> Music { get; set; }
+        public ObservableCollection<PlayListElement> Video { get; set; }
+        public ObservableCollection<PlayListElement> Picture { get; set; }
 
         public Library()
         {
-            this.music = new ObservableCollection<PlayListElement>();
-            this.video = new ObservableCollection<PlayListElement>();
-            this.picture = new ObservableCollection<PlayListElement>();
+            this.Music = new ObservableCollection<PlayListElement>();
+            this.Video = new ObservableCollection<PlayListElement>();
+            this.Picture = new ObservableCollection<PlayListElement>();
         }
 
         public Library load(string name)

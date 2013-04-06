@@ -82,9 +82,58 @@ namespace WindowsMediaPlayer
             get { return this.selectedItem; }
             set
             {
+                this.ressourceManager.FileFound = true;
                 this.selectedItem = value;
                 this.ressourceManager.SelectedItem = value;
                 NotifyPropertyChanged("SelectedItem");
+                this.ressourceManager.SelectedMusic = null;
+                this.ressourceManager.SelectedVideo = null;
+                this.ressourceManager.SelectedPicture = null;
+            }
+        }
+        private PlayListElement selectedVideo;
+        public PlayListElement SelectedVideo
+        {
+            get { return this.selectedVideo; }
+            set
+            {
+                this.ressourceManager.FileFound = true;
+                this.selectedVideo = value;
+                this.ressourceManager.SelectedVideo = value;
+                this.ressourceManager.SelectedItem = null;
+                this.ressourceManager.SelectedMusic = null;
+                this.ressourceManager.SelectedPicture = null;
+                NotifyPropertyChanged("SelectedVideo");
+            }
+        }
+        private PlayListElement selectedMusic;
+        public PlayListElement SelectedMusic
+        {
+            get { return this.selectedMusic; }
+            set
+            {
+                this.ressourceManager.FileFound = true;
+                this.selectedMusic = value;
+                this.ressourceManager.SelectedMusic = value;
+                this.ressourceManager.SelectedItem = null;
+                this.ressourceManager.SelectedVideo = null;
+                this.ressourceManager.SelectedPicture = null;
+                NotifyPropertyChanged("SelectedMusic");
+            }
+        }
+        private PlayListElement selectedPicture;
+        public PlayListElement SelectedPicture
+        {
+            get { return this.selectedPicture; }
+            set
+            {
+                this.ressourceManager.FileFound = true;
+                this.selectedPicture = value;
+                this.ressourceManager.SelectedPicture = value;
+                this.ressourceManager.SelectedItem = null;
+                this.ressourceManager.SelectedVideo = null;
+                this.ressourceManager.SelectedMusic = null;
+                NotifyPropertyChanged("SelectedPicture");
             }
         }
         public MediaElement MyMediaPlayer
@@ -98,6 +147,18 @@ namespace WindowsMediaPlayer
         public ObservableCollection<PlayListElement> Playlist
         {
             get { return this.ressourceManager.Playlist.Elements; }
+        }
+        public ObservableCollection<PlayListElement> MusicLibrary
+        {
+            get { return this.ressourceManager.Library.Music; }
+        }
+        public ObservableCollection<PlayListElement> VideoLibrary
+        {
+            get { return this.ressourceManager.Library.Video; }
+        }
+        public ObservableCollection<PlayListElement> ImageLibrary
+        {
+            get { return this.ressourceManager.Library.Picture; }
         }
 
 
@@ -114,6 +175,13 @@ namespace WindowsMediaPlayer
         public ICommand LoadPlayList { get; private set; }
         public ICommand AddElementInPlaylist { get; private set; }
         public ICommand PlaySelectedItem { get; private set; }
+        public ICommand PlaySelectedItemMusicLibrary { get; private set; }
+        public ICommand PlaySelectedItemVideoLibrary { get; private set; }
+        public ICommand PlaySelectedItemImageLibrary { get; private set; }
+        public ICommand PlaylistFunc { get; private set; }
+        public ICommand LibraryFunc { get; private set; }
+
+        public ICommand test { get; private set; }
         
         public ViewModelPlayer()
         {
@@ -129,7 +197,13 @@ namespace WindowsMediaPlayer
             this.AddElementInPlaylist = new RelayCommand(this.ressourceManager.AddElementInPlaylist);
             this.NextFile = new RelayCommand(this.mediaHandler.NextFile);
             this.PreviousFile = new RelayCommand(this.mediaHandler.PreviousFile);
-            this.PlaySelectedItem = new RelayCommand(this.mediaHandler.PlaySelectedFile);
+            this.PlaySelectedItem = new RelayCommand(this.mediaHandler.PlaySelectedFileInPlaylist);
+            this.PlaySelectedItemMusicLibrary = new RelayCommand(this.mediaHandler.PlaySelectedFileMusicLibrary);
+            this.PlaySelectedItemVideoLibrary = new RelayCommand(this.mediaHandler.PlaySelectedFileVideoLibrary);
+            this.PlaySelectedItemImageLibrary = new RelayCommand(this.mediaHandler.PlaySelectedFileImageLibrary);
+
+            this.PlaylistFunc = new RelayCommand(this.IsPlaylist);
+            this.LibraryFunc = new RelayCommand(this.IsLibrary);
 
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
             this.mediaHandler.FileLoaded += new EventHandler(OnFileLoaded);
@@ -173,5 +247,17 @@ namespace WindowsMediaPlayer
         {
             this.CurrentTimeSpan = TimeSpan.FromSeconds(this.ProgressBar.Value);
         }
+
+        private void IsPlaylist()
+        {
+            this.ressourceManager.isPlaylist = true;
+        }
+
+        private void IsLibrary()
+        {
+            this.ressourceManager.isPlaylist = false;
+        }
+
+
     }
 }

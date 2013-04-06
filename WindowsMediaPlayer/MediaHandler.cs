@@ -100,11 +100,28 @@ namespace WindowsMediaPlayer
 
                     if (this.PlayState == ePlayState.Stop)
                     {
-                        if (this.RessourceManager.PlaylistFound
+                        if (this.RessourceManager.isPlaylist && this.RessourceManager.PlaylistFound
                             && (this.RessourceManager.CurrentElementInPlaylist < this.RessourceManager.NumberElementInPlaylist))
                         {
                             this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Playlist.Elements[this.RessourceManager.CurrentElementInPlaylist].Pathname, UriKind.Relative));
                             ++(this.RessourceManager.CurrentElementInPlaylist);
+                        }
+                        else if (this.RessourceManager.isPlaylist == false)
+                        {
+                            Int32 tmp;
+                            if ( (tmp = this.RessourceManager.Library.Picture.IndexOf(this.RessourceManager.SelectedPicture)) != -1)
+                            {
+                                this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Picture[tmp].Pathname, UriKind.Relative));
+                            }
+                            else if ( (tmp = this.RessourceManager.Library.Video.IndexOf(this.RessourceManager.SelectedVideo)) != -1)
+                            {
+                                this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Video[tmp].Pathname, UriKind.Relative));;
+                            }
+                            else
+                            {
+                                tmp = this.RessourceManager.Library.Music.IndexOf(this.RessourceManager.SelectedMusic);
+                                this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Music[tmp].Pathname, UriKind.Relative));;
+                            }
                         }
                         else
                             this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.FilePath, UriKind.Relative));
@@ -125,9 +142,27 @@ namespace WindowsMediaPlayer
             }
         }
 
-        public void PlaySelectedFile()
+        public void PlaySelectedFileInPlaylist()
         {
             this.RessourceManager.CurrentElementInPlaylist = this.RessourceManager.Playlist.Elements.IndexOf(this.RessourceManager.SelectedItem);
+            this.PlayState = ePlayState.Stop;
+            PlayFile();
+        }
+
+        public void PlaySelectedFileMusicLibrary()
+        {
+            this.PlayState = ePlayState.Stop;
+            PlayFile();
+        }
+
+        public void PlaySelectedFileVideoLibrary()
+        {
+            this.PlayState = ePlayState.Stop;
+            PlayFile();
+        }
+
+        public void PlaySelectedFileImageLibrary()
+        {
             this.PlayState = ePlayState.Stop;
             PlayFile();
         }

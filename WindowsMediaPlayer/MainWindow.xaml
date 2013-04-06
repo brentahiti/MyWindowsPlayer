@@ -248,19 +248,19 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Content="Music" Height="28" HorizontalAlignment="Left" Name="MusicLabelLibrary" VerticalAlignment="Top" />
-                        <ListBox Grid.Row="0" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding MusicLibrary}" wm:ControlItemDoubleClick.ItemsDoubleClick="true" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}">
+                        <ListBox Grid.Row="0" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding MusicLibrary}" wm:ControlItemDoubleClick.ItemsDoubleClick="true" SelectedItem="{Binding Path=SelectedMusic, Mode=TwoWay}">
                             <ListBox.InputBindings>
                                 <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PlaySelectedItemMusicLibrary}" CommandParameter="{Binding}" />
                             </ListBox.InputBindings>
                         </ListBox>
                         <Label Grid.Row="1" Content="Videos" Height="28" HorizontalAlignment="Left" Name="VideoLabelLibrary" VerticalAlignment="Top" />
-                        <ListBox Grid.Row="1" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding VideoLibrary}" wm:ControlItemDoubleClick.ItemsDoubleClick="true" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}">
+                        <ListBox Grid.Row="1" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding VideoLibrary}" wm:ControlItemDoubleClick.ItemsDoubleClick="true" SelectedItem="{Binding Path=SelectedVideo, Mode=TwoWay}">
                             <ListBox.InputBindings>
                                 <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PlaySelectedItemVideoLibrary}" CommandParameter="{Binding}" />
                             </ListBox.InputBindings>
                         </ListBox>
                         <Label Grid.Row="2" Content="Images" Height="28" HorizontalAlignment="Left" Name="ImageLabelLibrary" VerticalAlignment="Top" />
-                        <ListBox Grid.Row="2" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding ImageLibrary}" wm:ControlItemDoubleClick.ItemsDoubleClick="true" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}">
+                        <ListBox Grid.Row="2" Margin="0,25,0,0" Background="Transparent" ItemsSource="{Binding ImageLibrary}" wm:ControlItemDoubleClick.ItemsDoubleClick="true" SelectedItem="{Binding Path=SelectedPicture, Mode=TwoWay}">
                             <ListBox.InputBindings>
                                 <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding PlaySelectedItemImageLibrary}" CommandParameter="{Binding}" />
                             </ListBox.InputBindings>

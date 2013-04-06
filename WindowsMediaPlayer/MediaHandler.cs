@@ -109,17 +109,17 @@ namespace WindowsMediaPlayer
                         else if (this.RessourceManager.isPlaylist == false)
                         {
                             Int32 tmp;
-                            if ( (tmp = this.RessourceManager.Library.Picture.IndexOf(this.RessourceManager.SelectedItem)) != -1)
+                            if ( (tmp = this.RessourceManager.Library.Picture.IndexOf(this.RessourceManager.SelectedPicture)) != -1)
                             {
                                 this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Picture[tmp].Pathname, UriKind.Relative));
                             }
-                            else if ( (tmp = this.RessourceManager.Library.Video.IndexOf(this.RessourceManager.SelectedItem)) != -1)
+                            else if ( (tmp = this.RessourceManager.Library.Video.IndexOf(this.RessourceManager.SelectedVideo)) != -1)
                             {
                                 this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Video[tmp].Pathname, UriKind.Relative));;
                             }
                             else
                             {
-                                tmp = this.RessourceManager.Library.Music.IndexOf(this.RessourceManager.SelectedItem);
+                                tmp = this.RessourceManager.Library.Music.IndexOf(this.RessourceManager.SelectedMusic);
                                 this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Music[tmp].Pathname, UriKind.Relative));;
                             }
                         }
@@ -157,7 +157,6 @@ namespace WindowsMediaPlayer
 
         public void PlaySelectedFileVideoLibrary()
         {
-            Console.WriteLine("video");
             this.PlayState = ePlayState.Stop;
             PlayFile();
         }

@@ -86,6 +86,54 @@ namespace WindowsMediaPlayer
                 this.selectedItem = value;
                 this.ressourceManager.SelectedItem = value;
                 NotifyPropertyChanged("SelectedItem");
+                this.ressourceManager.SelectedMusic = null;
+                this.ressourceManager.SelectedVideo = null;
+                this.ressourceManager.SelectedPicture = null;
+            }
+        }
+        private PlayListElement selectedVideo;
+        public PlayListElement SelectedVideo
+        {
+            get { return this.selectedVideo; }
+            set
+            {
+                this.ressourceManager.FileFound = true;
+                this.selectedVideo = value;
+                this.ressourceManager.SelectedVideo = value;
+                this.ressourceManager.SelectedItem = null;
+                this.ressourceManager.SelectedMusic = null;
+                this.ressourceManager.SelectedPicture = null;
+                NotifyPropertyChanged("SelectedVideo");
+            }
+        }
+        private PlayListElement selectedMusic;
+        public PlayListElement SelectedMusic
+        {
+            get { return this.selectedMusic; }
+            set
+            {
+                this.ressourceManager.FileFound = true;
+                this.selectedMusic = value;
+                this.ressourceManager.SelectedMusic = value;
+                this.ressourceManager.SelectedItem = null;
+                this.ressourceManager.SelectedVideo = null;
+                this.ressourceManager.SelectedPicture = null;
+                NotifyPropertyChanged("SelectedMusic");
+            }
+        }
+        private PlayListElement selectedPicture;
+        public PlayListElement SelectedPicture
+        {
+            get { return this.selectedPicture; }
+            set
+            {
+                this.ressourceManager.FileFound = true;
+                this.selectedPicture = value;
+                this.ressourceManager.SelectedPicture = value;
+                this.ressourceManager.SelectedItem = null;
+                this.ressourceManager.SelectedVideo = null;
+                this.ressourceManager.SelectedMusic = null;
+                NotifyPropertyChanged("SelectedPicture");
             }
         }
         public MediaElement MyMediaPlayer

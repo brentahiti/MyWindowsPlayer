@@ -14,6 +14,9 @@ namespace WindowsMediaPlayer
         public string FilePath { get; private set; }
 
         public PlayListElement SelectedItem { get; set; }
+        public PlayListElement SelectedPicture { get; set; }
+        public PlayListElement SelectedMusic { get; set; }
+        public PlayListElement SelectedVideo { get; set; }
         public int CurrentElementInPlaylist { get; set; }
         public int NumberElementInPlaylist { get; set; }
         public Playlist Playlist { get; private set; }

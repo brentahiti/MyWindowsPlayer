@@ -39,6 +39,7 @@ namespace WindowsMediaPlayer
         private Brush BgNormal;
 
         private bool isFullScreen = false;
+        private double layoutWidth = -1;
 
         public enum ResizeDirection
         {
@@ -201,6 +202,12 @@ namespace WindowsMediaPlayer
                 this.BorderFullScreen3.BorderThickness = new System.Windows.Thickness(1, 0, 0, 1);
                 this.BorderFullScreen4.BorderThickness = new System.Windows.Thickness(0, 0, 1, 1);
 
+
+                if (this.layoutWidth == -1)
+                    this.layoutWidth = this.LayoutDefinition.ColumnDefinitions[0].ActualWidth;
+                this.LayoutDefinition.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Pixel);
+                this.LayoutDefinition.ColumnDefinitions[0].Width = new GridLength(0, GridUnitType.Pixel);
+
                 this.Topmost = true;
                 this.isFullScreen = true;
                 this.WindowState = WindowState.Maximized;
@@ -261,12 +268,24 @@ namespace WindowsMediaPlayer
             Console.WriteLine((string)((DataObject)e.Data).GetFileDropList()[0]);
         }
 
+        private void ToggleRightListGrid(object sender, RoutedEventArgs e)
+        {
+            if (this.layoutWidth == -1)
+                this.layoutWidth = this.LayoutDefinition.ColumnDefinitions[0].ActualWidth;
+            if (this.LayoutDefinition.ColumnDefinitions[2].ActualWidth > 0)
+                this.LayoutDefinition.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Pixel);
+            else
+                this.LayoutDefinition.ColumnDefinitions[2].Width = new GridLength(this.layoutWidth, GridUnitType.Pixel);
+        }
+
         private void TogglePlayListGrid(object sender, RoutedEventArgs e)
         {
-            if (this.PlayListGrid.Visibility == System.Windows.Visibility.Visible)
-                this.PlayListGrid.Visibility = System.Windows.Visibility.Hidden;
+            if (this.layoutWidth == -1)
+                this.layoutWidth = this.LayoutDefinition.ColumnDefinitions[0].ActualWidth;
+            if (this.LayoutDefinition.ColumnDefinitions[0].ActualWidth > 0)
+                this.LayoutDefinition.ColumnDefinitions[0].Width = new GridLength(0, GridUnitType.Pixel);
             else
-                this.PlayListGrid.Visibility = System.Windows.Visibility.Visible;
+                this.LayoutDefinition.ColumnDefinitions[0].Width = new GridLength(this.layoutWidth, GridUnitType.Pixel);
         }
     }
 }

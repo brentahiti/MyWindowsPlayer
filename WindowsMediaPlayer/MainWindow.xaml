@@ -208,11 +208,11 @@
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Grid>
+                <Grid x:Name="LayoutDefinition">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="225" />
-                        <ColumnDefinition Width="500" />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="225"  />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="225"  />
                     </Grid.ColumnDefinitions>
 
                     <Viewbox Grid.Column="1">
@@ -269,17 +269,19 @@
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="192" />
-                    <ColumnDefinition Width="688*" />
-                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="329.333" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="175.333" />
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.ColumnSpan="2" Margin="192,0,0,0">
-                    <Button Command="{Binding AddToLibrary}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Content="AddinLib" Foreground="White" Margin="6,10,0,12" Height="18"/>
-                    <Button Command="{Binding PreviousFile}" Template="{DynamicResource ButtonWMP}" Width="58" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Precedent" Foreground="White" Margin="62,10,0,12" Height="18"/>
-                    <Button Command="{Binding NextFile}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Suivant" Foreground="White" Margin="126,10,0,12" Height="18"/>
-                    <ContentControl Margin="275,8,192,10" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="100" Width="163" Content="{Binding ProgressBar}" />
-                    <TextBox Height="22" HorizontalAlignment="Right" Margin="0,8,90,10" Name="textBox1" VerticalAlignment="Center" Width="103">
+                <Grid Grid.ColumnSpan="2" Margin="330,0,0,0">
+
+
+                    <ContentControl Margin="0" VerticalAlignment="Center" MinWidth="100" Content="{Binding ProgressBar}" />
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <TextBox Height="22" HorizontalAlignment="Left" Margin="0" Name="textBox1" VerticalAlignment="Center" Width="103">
                         <TextBox.Text>
                             <MultiBinding StringFormat="{}{0:hh':'mm':'ss}/{1:hh':'mm':'ss}">
                                 <Binding Path="CurrentTimeSpan" />
@@ -287,19 +289,6 @@
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
-                    <Button Template="{DynamicResource ButtonWMP}" Margin="598,8,0,9" Width="23" Height="23" Click="TogglePlayListGrid" Command="{Binding LibraryFunc}">
-                        <Canvas Height="20" Width="20">
-                            <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="2" Width="4" />
-                            <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="2" Width="11" />
-                            <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="8" Width="4" />
-                            <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="8" Width="11" />
-                            <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="14" Width="4" />
-                            <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="14" Width="11" />
-                        </Canvas>
-                    </Button>
-                </Grid>
-
-                <Grid Grid.Column="2">
                     <Slider x:Name="Volume" Value="{Binding ValueSoundContent}" SmallChange="1" Maximum="100" Margin="0,0,47,0" Orientation="Vertical" HorizontalAlignment="Right" />
                     <TextBox VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="txtValue" Text="{Binding Value, ElementName=Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="22" Width="30" Margin="0,9,6,9" />
                 </Grid>
@@ -322,7 +311,7 @@
                         <Border Height="4.5" x:Name="BorderFullScreen4" Canvas.Left="1.5" Canvas.Top="3.8" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="1,1,0,0" />
                     </Canvas>
                 </Button>
-                <Button Template="{DynamicResource ButtonWMP}" Margin="89,8.5,80,8" Width="23" Height="23" Click="TogglePlayListGrid" Command="{Binding PlaylistFunc}">
+                <Button Template="{DynamicResource ButtonWMP}" Margin="89,0,0,0" Width="23" Height="23" Click="TogglePlayListGrid" Command="{Binding PlaylistFunc}" HorizontalAlignment="Left">
                     <Canvas Height="20" Width="20">
                         <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="2" Width="4"/>
                         <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="2" Width="11"/>
@@ -332,12 +321,50 @@
                         <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="14" Width="11"/>
                     </Canvas>
                 </Button>
+
+                <Button Template="{DynamicResource ButtonWMP}" Margin="116,0,0,0" Width="23" Height="23" Click="ToggleRightListGrid" Command="{Binding LibraryFunc}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Canvas Height="20" Width="20">
+                        <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Right="1.417" Canvas.Top="2" Width="4" />
+                        <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Right="8" Canvas.Top="2" Width="11" />
+                        <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Right="1.417" Canvas.Top="8" Width="4" />
+                        <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Right="8" Canvas.Top="8" Width="11" />
+                        <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Right="1.417" Canvas.Top="14" Width="4" />
+                        <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Right="8" Canvas.Top="14" Width="11" />
+                    </Canvas>
+                </Button>
+                <Button Command="{Binding PreviousFile}" Template="{DynamicResource ButtonWMP}" Width="23" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Margin="144,0,0,0" Height="23">
+                    <Canvas Width="10" Height="9.352" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path Visibility="{Binding VisiblePlay}" Canvas.Left="1" Height="9.353" Width="8.68" Fill="#FFFBFBFB" Stretch="Fill" Data="M15.639187,16.184645 L15.627616,24.492212 L23.324333,20.374496 z" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="180"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <Border BorderThickness="0,0,1,0" Background="White" Canvas.Left="0">
+                            <Path Data="M10.5,19 L10.5,8" Fill="#FFFBFBFB" Height="9.353" Stretch="Fill" Width="1"/>
+                        </Border>
+                    </Canvas>
+                </Button>
+                <Button Command="{Binding NextFile}" Template="{DynamicResource ButtonWMP}" Height="23" Width="23" HorizontalAlignment="Left" Foreground="White" Margin="172,0,0,0" VerticalAlignment="Center">
+                    <Canvas Width="10" Height="9.352" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path Visibility="{Binding VisiblePlay}" Canvas.Left="0" Height="9.353" Width="8.68" Fill="#FFFBFBFB" Stretch="Fill" Data="M15.639187,16.184645 L15.627616,24.492212 L23.324333,20.374496 z"/>
+                        <Border BorderThickness="0,0,1,0" Background="White" Canvas.Left="8.68">
+                            <Path Data="M10.5,19 L10.5,8" Fill="#FFFBFBFB" Height="9.353" Stretch="Fill" Canvas.Top="8" Width="1"/>
+                        </Border>
+                    </Canvas>
+                </Button>
+                <Button Command="{Binding AddToLibrary}" Template="{DynamicResource ButtonWMP}" Width="50" HorizontalAlignment="Left" Content="AddinLib" Foreground="White" Margin="201,0,0,0" Height="23"/>
+
                 <Button Command="{Binding StopFile}"  Template="{DynamicResource ButtonWMP}" x:Name="Stop" VerticalAlignment="Center" Height="23" Margin="5,8,0,8" Width="19" HorizontalAlignment="Left">
                     <StackPanel Height="9.353" Width="9.353" Orientation="Horizontal">
                         <Rectangle Height="9.353" Width="9.353" Fill="#FFFBFBFB" />
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding FindRessource}"  Template="{DynamicResource ButtonWMP}" x:Name="Parcourir" HorizontalAlignment="Right" Margin="0,8,6,8" VerticalAlignment="Center" Content="Parcourir..." BorderThickness="4,1,1,1" Cursor="Hand" Foreground="#FFFBFBFB" Height="23" Width="63.801">
+                <Button Command="{Binding FindRessource}"  Template="{DynamicResource ButtonWMP}" x:Name="Parcourir" HorizontalAlignment="Left" Margin="257,0,0,0" Content="Parcourir..." BorderThickness="4,1,1,1" Cursor="Hand" Foreground="#FFFBFBFB" Width="63.801" Height="23">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                             <GradientStop Color="#FFF3F3F3" Offset="0"/>

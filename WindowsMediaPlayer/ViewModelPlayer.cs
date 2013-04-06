@@ -82,6 +82,7 @@ namespace WindowsMediaPlayer
             get { return this.selectedItem; }
             set
             {
+                this.ressourceManager.FileFound = true;
                 this.selectedItem = value;
                 this.ressourceManager.SelectedItem = value;
                 NotifyPropertyChanged("SelectedItem");
@@ -129,6 +130,10 @@ namespace WindowsMediaPlayer
         public ICommand PlaySelectedItemMusicLibrary { get; private set; }
         public ICommand PlaySelectedItemVideoLibrary { get; private set; }
         public ICommand PlaySelectedItemImageLibrary { get; private set; }
+        public ICommand PlaylistFunc { get; private set; }
+        public ICommand LibraryFunc { get; private set; }
+
+        public ICommand test { get; private set; }
         
         public ViewModelPlayer()
         {
@@ -148,6 +153,9 @@ namespace WindowsMediaPlayer
             this.PlaySelectedItemMusicLibrary = new RelayCommand(this.mediaHandler.PlaySelectedFileMusicLibrary);
             this.PlaySelectedItemVideoLibrary = new RelayCommand(this.mediaHandler.PlaySelectedFileVideoLibrary);
             this.PlaySelectedItemImageLibrary = new RelayCommand(this.mediaHandler.PlaySelectedFileImageLibrary);
+
+            this.PlaylistFunc = new RelayCommand(this.IsPlaylist);
+            this.LibraryFunc = new RelayCommand(this.IsLibrary);
 
             this.mediaHandler.FileEvent += new EventHandler<FileEventArg>(ChangeLectureContent);
             this.mediaHandler.FileLoaded += new EventHandler(OnFileLoaded);
@@ -191,5 +199,17 @@ namespace WindowsMediaPlayer
         {
             this.CurrentTimeSpan = TimeSpan.FromSeconds(this.ProgressBar.Value);
         }
+
+        private void IsPlaylist()
+        {
+            this.ressourceManager.isPlaylist = true;
+        }
+
+        private void IsLibrary()
+        {
+            this.ressourceManager.isPlaylist = false;
+        }
+
+
     }
 }

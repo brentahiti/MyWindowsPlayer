@@ -10,7 +10,7 @@ namespace WindowsMediaPlayer
 {
     public class RessourceManager
     {
-        public bool FileFound { get; private set; }
+        public bool FileFound { get; set; }
         public string FilePath { get; private set; }
 
         public PlayListElement SelectedItem { get; set; }
@@ -19,6 +19,9 @@ namespace WindowsMediaPlayer
         public Playlist Playlist { get; private set; }
         public bool PlaylistFound { get; private set; }
         public Library Library { get; private set; }
+
+
+        public bool isPlaylist = false;
 
         public RessourceManager()
         {

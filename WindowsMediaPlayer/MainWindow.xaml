@@ -288,7 +288,7 @@
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
-                    <Button Template="{DynamicResource ButtonWMP}" Margin="598,8,0,9" Width="23" Height="23" Click="TogglePlayListGrid">
+                    <Button Template="{DynamicResource ButtonWMP}" Margin="598,8,0,9" Width="23" Height="23" Click="TogglePlayListGrid" Command="{Binding LibraryFunc}">
                         <Canvas Height="20" Width="20">
                             <Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="2" Width="4" />
                             <Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="2" Width="11" />
@@ -323,7 +323,7 @@
                         <Border Height="4.5" x:Name="BorderFullScreen4" Canvas.Left="1.5" Canvas.Top="3.8" VerticalAlignment="Center" Width="6" Background="#00000000" BorderBrush="White" BorderThickness="1,1,0,0" />
                     </Canvas>
                 </Button>
-                <Button Template="{DynamicResource ButtonWMP}" Margin="89,8.5,80,8" Width="23" Height="23" Click="TogglePlayListGrid">
+                <Button Template="{DynamicResource ButtonWMP}" Margin="89,8.5,80,8" Width="23" Height="23" Click="TogglePlayListGrid" Command="{Binding PlaylistFunc}">
 					<Canvas Height="20" Width="20">
 						<Ellipse Fill="#FFFBFBFB" Height="4" Canvas.Left="1.417" Canvas.Top="2" Width="4"/>
 						<Rectangle Fill="#FFFBFBFB" Height="4" Canvas.Left="8" Canvas.Top="2" Width="11"/>

@@ -60,6 +60,8 @@ namespace WindowsMediaPlayer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (this.LayoutDefinition.ColumnDefinitions[2].ActualWidth > 0)
+                this.LayoutDefinition.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Pixel);
             this.hwndSource = PresentationSource.FromVisual((Visual)sender) as HwndSource;
 
             var row = this.MainLayoutGrid.ColumnDefinitions;
@@ -275,7 +277,11 @@ namespace WindowsMediaPlayer
             if (this.LayoutDefinition.ColumnDefinitions[2].ActualWidth > 0)
                 this.LayoutDefinition.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Pixel);
             else
+            {
+                if (this.LayoutDefinition.ColumnDefinitions[0].ActualWidth > 0)
+                    this.LayoutDefinition.ColumnDefinitions[0].Width = new GridLength(0, GridUnitType.Pixel);
                 this.LayoutDefinition.ColumnDefinitions[2].Width = new GridLength(this.layoutWidth, GridUnitType.Pixel);
+            }
         }
 
         private void TogglePlayListGrid(object sender, RoutedEventArgs e)
@@ -285,7 +291,11 @@ namespace WindowsMediaPlayer
             if (this.LayoutDefinition.ColumnDefinitions[0].ActualWidth > 0)
                 this.LayoutDefinition.ColumnDefinitions[0].Width = new GridLength(0, GridUnitType.Pixel);
             else
+            {
+                if (this.LayoutDefinition.ColumnDefinitions[2].ActualWidth > 0)
+                    this.LayoutDefinition.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Pixel);
                 this.LayoutDefinition.ColumnDefinitions[0].Width = new GridLength(this.layoutWidth, GridUnitType.Pixel);
+            }
         }
     }
 }

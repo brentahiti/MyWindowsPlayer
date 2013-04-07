@@ -77,7 +77,7 @@ namespace WindowsMediaPlayer
             this.MouseMove += new MouseEventHandler(eventMouseMove);
             this.timer = new Timer();
             this.timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
-            this.timer.Interval = (1000) * (1);
+            this.timer.Interval = (1000) * (2);
             this.timer.Enabled = true;
             this.timer.Start();
 

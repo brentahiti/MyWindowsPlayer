@@ -327,12 +327,11 @@ namespace WindowsMediaPlayer
             }
         }
 
-
         private void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             TimeSpan elaped = DateTime.Now - LastMouseMove;
 
-            if (elaped >= TimeoutToHide && !IsHidden)
+            if (isFullScreen && elaped >= TimeoutToHide && !IsHidden)
             {
                 this.Dispatcher.Invoke(new Action(() =>
                     {

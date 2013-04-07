@@ -176,19 +176,19 @@
                 <RowDefinition Height="2" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="1" Grid.Column="0">
-                <Grid HorizontalAlignment="Right" Width="94.257">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20" />
                         <ColumnDefinition Width="4" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0" Name="ImgIcon" Stretch="Uniform" Source="logo.gif" />
-                    <TextBlock Grid.Column="2" Name="TitleTblk" Foreground="White" Text="WindowMediaPlayer"/>
+                    <TextBlock Grid.Column="2" Name="TitleTblk" Foreground="White" Text="MyWindowMediaPlayer" HorizontalAlignment="Left"/>
                 </Grid>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2">
@@ -211,7 +211,7 @@
                 <Grid x:Name="LayoutDefinition">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="225"  />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition />
                         <ColumnDefinition Width="225"  />
                     </Grid.ColumnDefinitions>
 

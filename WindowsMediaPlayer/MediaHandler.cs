@@ -186,13 +186,16 @@ namespace WindowsMediaPlayer
 
         private void OnMediaOpened(object sender, RoutedEventArgs e)
         {
-            this.FileDuration = this.MediaPlayer.NaturalDuration.TimeSpan;
-            this.ProgressBar.Maximum = this.MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+            if (this.MediaPlayer.NaturalDuration.HasTimeSpan)
+            {
+                this.FileDuration = this.MediaPlayer.NaturalDuration.TimeSpan;
+                this.ProgressBar.Maximum = this.MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
 
-            this.mediaTimer = new DispatcherTimer();
-            this.mediaTimer.Interval = TimeSpan.FromSeconds(1);
-            this.mediaTimer.Tick += new EventHandler(MediaTimerTick);
-            this.mediaTimer.Start();
+                this.mediaTimer = new DispatcherTimer();
+                this.mediaTimer.Interval = TimeSpan.FromSeconds(1);
+                this.mediaTimer.Tick += new EventHandler(MediaTimerTick);
+                this.mediaTimer.Start();
+            }
 
             if (this.FileLoaded != null)
             {

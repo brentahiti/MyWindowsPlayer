@@ -87,8 +87,14 @@ namespace WindowsMediaPlayer
                 this.ressourceManager.SelectedItem = value;
                 NotifyPropertyChanged("SelectedItem");
                 this.ressourceManager.SelectedMusic = null;
+                this.selectedMusic = null;
+                NotifyPropertyChanged("SelectedMusic");
                 this.ressourceManager.SelectedVideo = null;
+                this.selectedVideo = null;
+                NotifyPropertyChanged("SelectedVideo");
                 this.ressourceManager.SelectedPicture = null;
+                this.selectedPicture = null;
+                NotifyPropertyChanged("SelectedPicture");
             }
         }
         private PlayListElement selectedVideo;
@@ -101,9 +107,15 @@ namespace WindowsMediaPlayer
                 this.selectedVideo = value;
                 this.ressourceManager.SelectedVideo = value;
                 this.ressourceManager.SelectedItem = null;
+                this.selectedItem = null;
                 this.ressourceManager.SelectedMusic = null;
+                this.selectedMusic = null;
                 this.ressourceManager.SelectedPicture = null;
+                this.selectedPicture = null;
                 NotifyPropertyChanged("SelectedVideo");
+                NotifyPropertyChanged("SelectedItem");
+                NotifyPropertyChanged("SelectedMusic");
+                NotifyPropertyChanged("SelectedPicture");
             }
         }
         private PlayListElement selectedMusic;
@@ -116,9 +128,15 @@ namespace WindowsMediaPlayer
                 this.selectedMusic = value;
                 this.ressourceManager.SelectedMusic = value;
                 this.ressourceManager.SelectedItem = null;
+                this.selectedItem = null;
                 this.ressourceManager.SelectedVideo = null;
+                this.selectedVideo = null;
                 this.ressourceManager.SelectedPicture = null;
+                this.selectedPicture = null;
                 NotifyPropertyChanged("SelectedMusic");
+                NotifyPropertyChanged("SelectedItem");
+                NotifyPropertyChanged("SelectedVideo");
+                NotifyPropertyChanged("SelectedPicture");
             }
         }
         private PlayListElement selectedPicture;
@@ -131,9 +149,15 @@ namespace WindowsMediaPlayer
                 this.selectedPicture = value;
                 this.ressourceManager.SelectedPicture = value;
                 this.ressourceManager.SelectedItem = null;
+                this.selectedItem = null;
                 this.ressourceManager.SelectedVideo = null;
+                this.selectedVideo = null;
                 this.ressourceManager.SelectedMusic = null;
+                this.selectedMusic = null;
                 NotifyPropertyChanged("SelectedPicture");
+                NotifyPropertyChanged("SelectedItem");
+                NotifyPropertyChanged("SelectedVideo");
+                NotifyPropertyChanged("SelectedMusic");
             }
         }
         public MediaElement MyMediaPlayer

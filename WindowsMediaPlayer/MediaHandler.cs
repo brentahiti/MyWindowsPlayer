@@ -33,6 +33,9 @@ namespace WindowsMediaPlayer
         public Slider ProgressBar { get; private set; }
         public TimeSpan FileDuration { get; private set; }
 
+        public Int32 PositionLibrary;
+        public bool NextPrevLibrary;
+
         public event EventHandler<FileEventArg> FileEvent;
         public event EventHandler FileLoaded;
         public event EventHandler FileEnded;
@@ -49,6 +52,9 @@ namespace WindowsMediaPlayer
             this.MediaPlayer.LoadedBehavior = MediaState.Manual;
             this.MediaPlayer.MediaOpened += new RoutedEventHandler(OnMediaOpened);
             this.MediaPlayer.MediaEnded += new RoutedEventHandler(OnMediaEnd);
+
+            this.PositionLibrary = 0;
+            this.NextPrevLibrary = false;
 
             this.ProgressBar = new Slider();
             this.ProgressBar.Value = 0.0;
@@ -71,6 +77,24 @@ namespace WindowsMediaPlayer
                     this.FileEnded(this, new EventArgs());
                 }
             }
+            else if (this.RessourceManager.TypeOfMedia == PathOfMedia.LIBRARY_MEDIA)
+            {
+                if ((this.RessourceManager.Library.actualList == TypeMedia.MUSIC &&
+                   this.PositionLibrary < (this.RessourceManager.Library.Music.Count - 1))
+                   || (this.RessourceManager.Library.actualList == TypeMedia.VIDEO &&
+                   this.PositionLibrary < (this.RessourceManager.Library.Video.Count - 1))
+                   || (this.RessourceManager.Library.actualList == TypeMedia.PICTURE &&
+                   this.PositionLibrary < (this.RessourceManager.Library.Picture.Count - 1)))
+                {
+                    this.PlayState = ePlayState.Stop;
+                    this.NextPrevLibrary = true;
+                    ++this.PositionLibrary;
+                    if (this.FileEnded != null)
+                    {
+                        this.FileEnded(this, new EventArgs());
+                    }
+                }
+            }
         }
 
         public void PreviousFile()
@@ -81,6 +105,23 @@ namespace WindowsMediaPlayer
                 if (this.RessourceManager.CurrentElementInPlaylist > 1)
                 {
                     (this.RessourceManager.CurrentElementInPlaylist) -= 2;
+                    if (this.FileEnded != null)
+                    {
+                        this.FileEnded(this, new EventArgs());
+                    }
+                }
+            }
+            else if (this.RessourceManager.TypeOfMedia == PathOfMedia.LIBRARY_MEDIA)
+            {
+                if ((this.RessourceManager.Library.actualList == TypeMedia.MUSIC
+                    || this.RessourceManager.Library.actualList == TypeMedia.VIDEO
+                    || this.RessourceManager.Library.actualList == TypeMedia.PICTURE)
+                    &&
+                    (this.PositionLibrary - 1) >= 0)
+                {
+                    this.PlayState = ePlayState.Stop;
+                    this.NextPrevLibrary = true;
+                    --this.PositionLibrary;
                     if (this.FileEnded != null)
                     {
                         this.FileEnded(this, new EventArgs());
@@ -112,23 +153,35 @@ namespace WindowsMediaPlayer
                         }
                         else if (this.RessourceManager.TypeOfMedia == PathOfMedia.LIBRARY_MEDIA)
                         {
-                            Int32 tmp;
-                            if ( (tmp = this.RessourceManager.Library.Picture.IndexOf(this.RessourceManager.SelectedPicture)) != -1)
+                            if (this.NextPrevLibrary)
                             {
-                                this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Picture[tmp].Pathname, UriKind.Relative));
+                                if (this.RessourceManager.Library.actualList == TypeMedia.MUSIC)
+                                    this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Music[this.PositionLibrary].Pathname, UriKind.Relative));
+                                else if (this.RessourceManager.Library.actualList == TypeMedia.PICTURE)
+                                    this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Picture[this.PositionLibrary].Pathname, UriKind.Relative));
+                                else
+                                    this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Video[this.PositionLibrary].Pathname, UriKind.Relative));
                             }
-                            else if ( (tmp = this.RessourceManager.Library.Video.IndexOf(this.RessourceManager.SelectedVideo)) != -1)
+                            else if ( (this.PositionLibrary = this.RessourceManager.Library.Picture.IndexOf(this.RessourceManager.SelectedPicture)) != -1)
                             {
-                                this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Video[tmp].Pathname, UriKind.Relative));;
+                                this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Picture[this.PositionLibrary].Pathname, UriKind.Relative));
+                                this.RessourceManager.Library.actualList = TypeMedia.PICTURE;
+                            }
+                            else if ((this.PositionLibrary = this.RessourceManager.Library.Video.IndexOf(this.RessourceManager.SelectedVideo)) != -1)
+                            {
+                                this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Video[this.PositionLibrary].Pathname, UriKind.Relative));
+                                this.RessourceManager.Library.actualList = TypeMedia.VIDEO;
                             }
                             else
                             {
-                                tmp = this.RessourceManager.Library.Music.IndexOf(this.RessourceManager.SelectedMusic);
-                                this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Music[tmp].Pathname, UriKind.Relative));;
+                                this.PositionLibrary = this.RessourceManager.Library.Music.IndexOf(this.RessourceManager.SelectedMusic);
+                                this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Library.Music[this.PositionLibrary].Pathname, UriKind.Relative));
+                                this.RessourceManager.Library.actualList = TypeMedia.MUSIC;
                             }
                         }
                         else
                             this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.FilePath, UriKind.Relative));
+                        this.NextPrevLibrary = false;
                     }
                     this.MediaPlayer.Play();
                     this.PlayState = ePlayState.Play;

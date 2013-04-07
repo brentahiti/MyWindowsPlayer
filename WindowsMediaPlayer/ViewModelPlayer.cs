@@ -261,7 +261,7 @@ namespace WindowsMediaPlayer
 
         private void OnFileEnded(object sender, EventArgs e)
         {
-            if (this.ressourceManager.PlaylistFound == true)
+            if (this.ressourceManager.PlaylistFound == true || this.mediaHandler.NextPrevLibrary)
             {
                 this.mediaHandler.PlayFile();
             }

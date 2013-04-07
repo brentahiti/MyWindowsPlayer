@@ -35,6 +35,15 @@ namespace WindowsMediaPlayer
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
+        [DllImport("User32.dll")]
+        private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+
+        private struct LASTINPUTINFO
+        {
+            public uint cbSize;
+            public uint dwTime;
+        }
+
         private List<double> _colsDefinition = new List<double> ();
         private List<double> _rowsDefinition = new List<double> ();
         private Brush BgNormal;
@@ -43,8 +52,6 @@ namespace WindowsMediaPlayer
         private double layoutWidth = -1;
         private double bottomHeight = -1;
 
-        public TimeSpan TimeoutToHide { get; private set; }
-        public DateTime LastMouseMove { get; private set; }
         private Timer timer;
 
         public bool IsHidden { get; private set; }
@@ -73,11 +80,9 @@ namespace WindowsMediaPlayer
 
             this.hwndSource = PresentationSource.FromVisual((Visual)sender) as HwndSource;
 
-            TimeoutToHide = TimeSpan.FromSeconds(1);
-            this.MouseMove += new MouseEventHandler(eventMouseMove);
             this.timer = new Timer();
             this.timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
-            this.timer.Interval = (1000) * (2);
+            this.timer.Interval = 500;
             this.timer.Enabled = true;
             this.timer.Start();
 
@@ -315,23 +320,9 @@ namespace WindowsMediaPlayer
             }
         }
 
-        private void eventMouseMove(object sender, MouseEventArgs e)
-        {
-            LastMouseMove = DateTime.Now;
-
-            if (IsHidden)
-            {
-                IsHidden = false;
-                this.Cursor = Cursors.Arrow;
-                this.MainContent.RowDefinitions[1].Height = new GridLength(this.bottomHeight, GridUnitType.Pixel);
-            }
-        }
-
         private void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            TimeSpan elaped = DateTime.Now - LastMouseMove;
-
-            if (isFullScreen && elaped >= TimeoutToHide && !IsHidden)
+            if (isFullScreen && SecondsSinceLastInput() > 2 && !IsHidden)
             {
                 this.Dispatcher.Invoke(new Action(() =>
                     {
@@ -342,6 +333,27 @@ namespace WindowsMediaPlayer
                     }));
                 IsHidden = true;
             }
+            else if (IsHidden && SecondsSinceLastInput() <= 2)
+            {
+                this.Dispatcher.Invoke(new Action(() =>
+                    {
+                        this.Cursor = Cursors.Arrow;
+                        this.MainContent.RowDefinitions[1].Height = new GridLength(this.bottomHeight, GridUnitType.Pixel);
+                    }));
+                IsHidden = false;
+            }
         }
+
+        public static double SecondsSinceLastInput()
+        {
+            LASTINPUTINFO lastInPut = new LASTINPUTINFO();
+            lastInPut.cbSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf(lastInPut);
+            GetLastInputInfo(ref lastInPut);
+
+            uint idle = (uint)Environment.TickCount - lastInPut.dwTime;
+            return idle / 1000.0;
+        }
+
+
     }
 }

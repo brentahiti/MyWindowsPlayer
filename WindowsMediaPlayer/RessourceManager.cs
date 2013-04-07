@@ -8,6 +8,8 @@ using System.IO;
 
 namespace WindowsMediaPlayer
 {
+    public enum PathOfMedia { PLAYLIST_MEDIA, LIBRARY_MEDIA, OTHER_MEDIA};
+
     public class RessourceManager
     {
         public bool FileFound { get; set; }
@@ -23,8 +25,7 @@ namespace WindowsMediaPlayer
         public bool PlaylistFound { get; private set; }
         public Library Library { get; private set; }
 
-
-        public bool isPlaylist = false;
+        public PathOfMedia TypeOfMedia {get; set;}
 
         public RessourceManager()
         {
@@ -127,6 +128,7 @@ namespace WindowsMediaPlayer
                 this.FileFound = true;
                 this.CurrentElementInPlaylist = 0;
                 this.PlaylistFound = false;
+                this.TypeOfMedia = PathOfMedia.OTHER_MEDIA;
                 this.NumberElementInPlaylist = 0;
                 this.Playlist.Elements.Clear();
                 this.FilePath = windowsDial.FileName;

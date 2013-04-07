@@ -100,13 +100,14 @@ namespace WindowsMediaPlayer
 
                     if (this.PlayState == ePlayState.Stop)
                     {
-                        if (this.RessourceManager.isPlaylist && this.RessourceManager.PlaylistFound
-                            && (this.RessourceManager.CurrentElementInPlaylist < this.RessourceManager.NumberElementInPlaylist))
+                        if (this.RessourceManager.TypeOfMedia == PathOfMedia.PLAYLIST_MEDIA && this.RessourceManager.PlaylistFound
+                            && (this.RessourceManager.CurrentElementInPlaylist < this.RessourceManager.NumberElementInPlaylist)
+                            && (this.RessourceManager.CurrentElementInPlaylist >= 0))
                         {
                             this.MediaPlayer.Source = (new System.Uri(this.RessourceManager.Playlist.Elements[this.RessourceManager.CurrentElementInPlaylist].Pathname, UriKind.Relative));
                             ++(this.RessourceManager.CurrentElementInPlaylist);
                         }
-                        else if (this.RessourceManager.isPlaylist == false)
+                        else if (this.RessourceManager.TypeOfMedia == PathOfMedia.LIBRARY_MEDIA)
                         {
                             Int32 tmp;
                             if ( (tmp = this.RessourceManager.Library.Picture.IndexOf(this.RessourceManager.SelectedPicture)) != -1)

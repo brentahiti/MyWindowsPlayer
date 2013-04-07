@@ -250,12 +250,12 @@ namespace WindowsMediaPlayer
 
         private void IsPlaylist()
         {
-            this.ressourceManager.isPlaylist = true;
+            this.ressourceManager.TypeOfMedia = PathOfMedia.PLAYLIST_MEDIA;
         }
 
         private void IsLibrary()
         {
-            this.ressourceManager.isPlaylist = false;
+            this.ressourceManager.TypeOfMedia = PathOfMedia.LIBRARY_MEDIA;
         }
 
 

@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using System.Timers;
 
 namespace WindowsMediaPlayer
 {
@@ -40,6 +41,13 @@ namespace WindowsMediaPlayer
 
         private bool isFullScreen = false;
         private double layoutWidth = -1;
+        private double bottomHeight = -1;
+
+        public TimeSpan TimeoutToHide { get; private set; }
+        public DateTime LastMouseMove { get; private set; }
+        private Timer timer;
+
+        public bool IsHidden { get; private set; }
 
         public enum ResizeDirection
         {
@@ -62,7 +70,16 @@ namespace WindowsMediaPlayer
         {
             if (this.LayoutDefinition.ColumnDefinitions[2].ActualWidth > 0)
                 this.LayoutDefinition.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Pixel);
+
             this.hwndSource = PresentationSource.FromVisual((Visual)sender) as HwndSource;
+
+            TimeoutToHide = TimeSpan.FromSeconds(1);
+            this.MouseMove += new MouseEventHandler(eventMouseMove);
+            this.timer = new Timer();
+            this.timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
+            this.timer.Interval = (1000) * (1);
+            this.timer.Enabled = true;
+            this.timer.Start();
 
             var row = this.MainLayoutGrid.ColumnDefinitions;
             for (var i = 0; i < row.Count(); i++)
@@ -117,7 +134,7 @@ namespace WindowsMediaPlayer
         private void ResetCursor(object sender, MouseEventArgs e)
         {
             if (Mouse.LeftButton != MouseButtonState.Pressed)
-                this.Cursor = Cursors.Arrow;
+                this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
 
         private void Resize(object sender, MouseEventArgs e)
@@ -126,37 +143,37 @@ namespace WindowsMediaPlayer
             switch (clickedRectangle.Name)
             {
                 case "top":
-                    this.Cursor = Cursors.SizeNS;
+                    this.Cursor = System.Windows.Input.Cursors.SizeNS;
                     ResizeWindow(ResizeDirection.Top);
                     break;
                 case "bottom":
-                    this.Cursor = Cursors.SizeNS;
+                    this.Cursor = System.Windows.Input.Cursors.SizeNS;
                     ResizeWindow(ResizeDirection.Bottom);
                     break;
                 case "left":
                 case "left1":
-                    this.Cursor = Cursors.SizeWE;
+                    this.Cursor = System.Windows.Input.Cursors.SizeWE;
                     ResizeWindow(ResizeDirection.Left);
                     break;
                 case "right":
                 case "right1":
-                    this.Cursor = Cursors.SizeWE;
+                    this.Cursor = System.Windows.Input.Cursors.SizeWE;
                     ResizeWindow(ResizeDirection.Right);
                     break;
                 case "topLeft":
-                    this.Cursor = Cursors.SizeNWSE;
+                    this.Cursor = System.Windows.Input.Cursors.SizeNWSE;
                     ResizeWindow(ResizeDirection.TopLeft);
                     break;
                 case "topRight":
-                    this.Cursor = Cursors.SizeNESW;
+                    this.Cursor = System.Windows.Input.Cursors.SizeNESW;
                     ResizeWindow(ResizeDirection.TopRight);
                     break;
                 case "bottomLeft":
-                    this.Cursor = Cursors.SizeNESW;
+                    this.Cursor = System.Windows.Input.Cursors.SizeNESW;
                     ResizeWindow(ResizeDirection.BottomLeft);
                     break;
                 case "bottomRight":
-                    this.Cursor = Cursors.SizeNWSE;
+                    this.Cursor = System.Windows.Input.Cursors.SizeNWSE;
                     ResizeWindow(ResizeDirection.BottomRight);
                     break;
                 default:
@@ -295,6 +312,36 @@ namespace WindowsMediaPlayer
                 if (this.LayoutDefinition.ColumnDefinitions[2].ActualWidth > 0)
                     this.LayoutDefinition.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Pixel);
                 this.LayoutDefinition.ColumnDefinitions[0].Width = new GridLength(this.layoutWidth, GridUnitType.Pixel);
+            }
+        }
+
+        private void eventMouseMove(object sender, MouseEventArgs e)
+        {
+            LastMouseMove = DateTime.Now;
+
+            if (IsHidden)
+            {
+                IsHidden = false;
+                this.Cursor = Cursors.Arrow;
+                this.MainContent.RowDefinitions[1].Height = new GridLength(this.bottomHeight, GridUnitType.Pixel);
+            }
+        }
+
+
+        private void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            TimeSpan elaped = DateTime.Now - LastMouseMove;
+
+            if (elaped >= TimeoutToHide && !IsHidden)
+            {
+                this.Dispatcher.Invoke(new Action(() =>
+                    {
+                        this.Cursor = Cursors.None;
+                        if (this.bottomHeight == -1)
+                            this.bottomHeight = this.MainContent.RowDefinitions[1].ActualHeight;
+                        this.MainContent.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Pixel);
+                    }));
+                IsHidden = true;
             }
         }
     }

@@ -62,8 +62,10 @@ namespace WindowsMediaPlayer
 
         public void NextFile()
         {
-            if (this.RessourceManager.PlaylistFound && this.RessourceManager.CurrentElementInPlaylist < this.RessourceManager.NumberElementInPlaylist)
+            if (this.RessourceManager.PlaylistFound && this.RessourceManager.TypeOfMedia == PathOfMedia.PLAYLIST_MEDIA && 
+                this.RessourceManager.CurrentElementInPlaylist < this.RessourceManager.NumberElementInPlaylist)
             {
+                this.PlayState = ePlayState.Stop;
                 if (this.FileEnded != null)
                 {
                     this.FileEnded(this, new EventArgs());
@@ -73,8 +75,9 @@ namespace WindowsMediaPlayer
 
         public void PreviousFile()
         {
-            if (this.RessourceManager.PlaylistFound)
+            if (this.RessourceManager.PlaylistFound && this.RessourceManager.TypeOfMedia == PathOfMedia.PLAYLIST_MEDIA)
             {
+                this.PlayState = ePlayState.Stop;
                 if (this.RessourceManager.CurrentElementInPlaylist > 1)
                 {
                     (this.RessourceManager.CurrentElementInPlaylist) -= 2;
